@@ -26,6 +26,9 @@ import { AppRoutingModule } from './app.routing';
 
 // Import 3rd party components
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
+import { environment } from '../environments/environment';
+
+import {AngularFireModule} from '@angular/fire';
 
 @NgModule({
   imports: [
@@ -39,6 +42,7 @@ import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
     AppSidebarModule,
     PerfectScrollbarModule,
     BsDropdownModule.forRoot(),
+    AngularFireModule.initializeApp(environment.firebase)
   ],
   declarations: [AppComponent, ...APP_CONTAINERS, LoginComponent],
   providers: [
