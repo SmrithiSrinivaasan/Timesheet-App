@@ -6,7 +6,10 @@ describe('CoreUI template', () => {
 
   page = new AppDashboard();
   const browser = page.getBrowser();
-  browser.driver.manage().window().setSize(600, 800);
+  browser.driver
+    .manage()
+    .window()
+    .setSize(600, 800);
   browser.sleep(sleep);
   page.navigateTo();
 
@@ -24,7 +27,10 @@ describe('CoreUI template', () => {
   });
 
   it('should toggle `sidebar-minimized` body.class on `sidebar-minimizer` click', () => {
-    browser.manage().window().maximize();
+    browser
+      .manage()
+      .window()
+      .maximize();
     browser.sleep(1000);
     const body = page.getBody();
     expect(body.getAttribute('class')).not.toContain('sidebar-minimized');
@@ -36,12 +42,18 @@ describe('CoreUI template', () => {
     button.click();
     browser.sleep(sleep);
     expect(body.getAttribute('class')).not.toContain('sidebar-minimized');
-    browser.driver.manage().window().setSize(600, 800);
+    browser.driver
+      .manage()
+      .window()
+      .setSize(600, 800);
     browser.sleep(1000);
   });
 
   it('should toggle `sidebar-show` body.class on `navbar-toggler` click', () => {
-    browser.driver.manage().window().setSize(600, 800);
+    browser.driver
+      .manage()
+      .window()
+      .setSize(600, 800);
     browser.sleep(1000);
     const body = page.getBody();
     expect(body.getAttribute('class')).not.toContain('sidebar-show');

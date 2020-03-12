@@ -1,7 +1,6 @@
 import { browser, by, element } from 'protractor';
 
 export class AppDashboard {
-
   getBrowser() {
     return browser;
   }
@@ -11,7 +10,11 @@ export class AppDashboard {
   }
 
   getParagraphText() {
-    return element(by.xpath('/html/body/app-dashboard/div/main/div/ng-component/div/div[2]/div[1]/div[1]/div[1]/h4')).getText();
+    return element(
+      by.xpath(
+        '/html/body/app-dashboard/div/main/div/ng-component/div/div[2]/div[1]/div[1]/div[1]/h4'
+      )
+    ).getText();
   }
   getBody() {
     return element(by.xpath('/html/body'));

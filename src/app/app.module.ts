@@ -11,17 +11,14 @@ import { AppComponent } from './app.component';
 import { DefaultLayoutComponent } from './containers';
 import { LoginComponent } from './views/login/login.component';
 
-
-const APP_CONTAINERS = [
-  DefaultLayoutComponent
-];
+const APP_CONTAINERS = [DefaultLayoutComponent];
 
 import {
   AppAsideModule,
   AppBreadcrumbModule,
   AppHeaderModule,
   AppFooterModule,
-  AppSidebarModule,
+  AppSidebarModule
 } from '@coreui/angular';
 
 // Import routing module
@@ -43,15 +40,13 @@ import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
     PerfectScrollbarModule,
     BsDropdownModule.forRoot()
   ],
-  declarations: [
-    AppComponent,
-    ...APP_CONTAINERS,
-    LoginComponent
+  declarations: [AppComponent, ...APP_CONTAINERS, LoginComponent],
+  providers: [
+    {
+      provide: LocationStrategy,
+      useClass: HashLocationStrategy
+    }
   ],
-  providers: [{
-    provide: LocationStrategy,
-    useClass: HashLocationStrategy
-  }],
-  bootstrap: [ AppComponent ]
+  bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {}

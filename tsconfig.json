@@ -10,12 +10,7 @@
     "experimentalDecorators": true,
     "module": "esnext",
     "target": "es5",
-    "typeRoots": [
-      "node_modules/@types"
-    ],
-    "lib": [
-      "esnext",
-      "dom"
-    ]
+    "typeRoots": ["node_modules/@types"],
+    "lib": ["esnext", "dom"]
   }
 }
