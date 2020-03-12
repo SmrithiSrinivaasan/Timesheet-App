@@ -1,6 +1,6 @@
-import { BrowserModule } from '@angular/platform-browser';
+import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { LocationStrategy, HashLocationStrategy } from '@angular/common';
+import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
@@ -16,9 +16,9 @@ const APP_CONTAINERS = [DefaultLayoutComponent];
 import {
   AppAsideModule,
   AppBreadcrumbModule,
-  AppHeaderModule,
   AppFooterModule,
-  AppSidebarModule
+  AppHeaderModule,
+  AppSidebarModule,
 } from '@coreui/angular';
 
 // Import routing module
@@ -38,15 +38,15 @@ import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
     AppHeaderModule,
     AppSidebarModule,
     PerfectScrollbarModule,
-    BsDropdownModule.forRoot()
+    BsDropdownModule.forRoot(),
   ],
   declarations: [AppComponent, ...APP_CONTAINERS, LoginComponent],
   providers: [
     {
       provide: LocationStrategy,
-      useClass: HashLocationStrategy
-    }
+      useClass: HashLocationStrategy,
+    },
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
 export class AppModule {}
