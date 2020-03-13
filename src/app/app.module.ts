@@ -29,7 +29,10 @@ import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { environment } from '../environments/environment';
 
 import { AngularFireModule } from '@angular/fire';
+import { AngularFireAuthModule } from '@angular/fire/auth';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+
+import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
   imports: [
@@ -46,6 +49,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     AngularFireModule.initializeApp(environment.firebase),
     FormsModule,
     ReactiveFormsModule,
+    AngularFireAuthModule,
+    ToastrModule.forRoot({
+      progressBar: true,
+    }),
   ],
   declarations: [AppComponent, ...APP_CONTAINERS, LoginComponent],
   providers: [
