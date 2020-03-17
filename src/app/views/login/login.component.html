@@ -42,13 +42,14 @@
 
                   <div class="row">
                     <div class="col-12 text-center">
-                      <button [disabled]='userForm.invalid || submitted' (click)=onLogin() class="btn btn-primary px-4">
+                      <button [disabled]='loginForm.invalid || submitted' (click)="onLogin()"  class="btn btn-primary px-4">
                         <span *ngIf="!submitted"> Login </span>
                         <span *ngIf="submitted"> Logging In <i class="fa fa-spinner fa-spin"></i></span>
                       </button>
                     </div>
                   </div>
                 </form>
+
               </div>
             </div>
           </div>
