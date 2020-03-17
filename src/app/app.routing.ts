@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 
 // Import Containers
 import { DefaultLayoutComponent } from './containers';
+import { AuthGuardService } from './shared/guards/auth-guard.service';
 import { LoginComponent } from './views/login/login.component';
 
 export const routes: Routes = [
@@ -10,6 +11,7 @@ export const routes: Routes = [
     path: '',
     redirectTo: 'dashboard',
     pathMatch: 'full',
+    canActivate: [AuthGuardService] // calls the canActivate function ln 12
   },
   {
     path: 'login',
@@ -24,6 +26,7 @@ export const routes: Routes = [
     data: {
       title: 'Home',
     },
+    canActivate: [AuthGuardService],
     children: [
       {
         path: 'dashboard',
