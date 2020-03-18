@@ -5,11 +5,10 @@ import {
   ActionReducer,
   ActionReducerMap,
   createFeatureSelector,
-  MetaReducer
+  MetaReducer,
 } from '@ngrx/store';
-import {localStorageSync} from 'ngrx-store-localstorage';
+import { localStorageSync } from 'ngrx-store-localstorage';
 import { authReducer } from '../views/login/store/reducers/authReducers';
-
 
 export const FEATURE_NAME = 'Timesheet';
 
@@ -21,7 +20,7 @@ export interface IStoreState {
 }
 
 export const reducers: ActionReducerMap<IStoreState> = {
-  auth : authReducer
+  auth: authReducer,
   // stores details in auth key
   // here also
 };
@@ -37,4 +36,6 @@ export function localStorageSyncReducer(
   })(reducer);
 }
 
-export const metaReducers: Array<MetaReducer<IStoreState, Action>> = [localStorageSyncReducer];
+export const metaReducers: Array<MetaReducer<IStoreState, Action>> = [
+  localStorageSyncReducer,
+];

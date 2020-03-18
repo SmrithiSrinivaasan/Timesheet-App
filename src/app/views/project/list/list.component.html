@@ -1,0 +1,22 @@
+<div class='container-fluid'>
+  <div class='card'>
+    <div *ngIf="!hasProject()" class="card-body">
+      No Projects Available - Click to Add
+    </div>
+  </div>
+  <table *ngIf="hasProject()" class='table table-bordered'>
+    <thead>
+      <tr>
+        <th>S.No.</th>
+        <th>Projects</th>
+        <th>Options</th>
+      </tr>
+    </thead>
+    <tbody>
+
+    </tbody>
+  </table>
+  <button (click)=onAdd() class='fab' mat-fab color='primary'>
+    <mat-icon>add</mat-icon>
+  </button>
+</div>

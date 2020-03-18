@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { Component, NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 // Import Containers
@@ -8,10 +8,10 @@ import { LoginComponent } from './views/login/login.component';
 
 export const routes: Routes = [
   {
-    path: '',
-    redirectTo: 'dashboard',
+    path: '', // calls when localhost:4200/
+    redirectTo: 'dashboard', // calls ln 32
     pathMatch: 'full',
-    canActivate: [AuthGuardService] // calls the canActivate function ln 12
+    canActivate: [AuthGuardService], // calls the canActivate function ln 12
   },
   {
     path: 'login',
@@ -34,6 +34,11 @@ export const routes: Routes = [
           import('./views/dashboard/dashboard.module').then(
             m => m.DashboardModule
           ),
+      },
+      {
+        path: 'project',
+        loadChildren: () =>
+          import('./views/project/project.module').then(m => m.ProjectModule),
       },
     ],
   },
