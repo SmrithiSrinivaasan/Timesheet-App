@@ -6,4 +6,9 @@ export const navItems: INavData[] = [
     url: '/dashboard',
     icon: 'icon-speedometer',
   },
+  {
+    name: 'Project',
+    url: '/project',
+    icon: 'icon-speedometer',
+  },
 ];
