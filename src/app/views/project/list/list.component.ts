@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { InputModalComponent } from '../../../shared/components/input-modal/input-modal.component';
 
 @Component({
   selector: 'app-list',
@@ -7,12 +9,24 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ListComponent implements OnInit {
   projects = [];
-
-  constructor() {}
+  bsModalRef: BsModalRef;
+  constructor(private modalService: BsModalService) {}
 
   ngOnInit(): void {}
 
-  onAdd() {}
+  onAdd() {
+    const initialState = {
+      title: 'Add Project',
+      inputLabel: 'Project Name',
+      saveButtonText: 'Save'
+    };
+  this.bsModalRef = this.modalService.show(InputModalComponent, {initialState});
+  this.bsModalRef.content.closeBtnName = 'Close';
+  // communication with input-modal
+  this.bsModalRef.content.save.subscribe((data: string) => {
+    this.bsModalRef.hide();
+  });
+  }
 
   hasProject() {
     return this.projects.length > 0;

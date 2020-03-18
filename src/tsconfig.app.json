@@ -10,6 +10,8 @@
       "@angular/*": ["../node_modules/@angular/*"]
     }
   },
+  "emitDecoratorMetadata": true,
+  "experimentalDecorators": true,
   "angularCompilerOptions": {
     "enableIvy": false
   },

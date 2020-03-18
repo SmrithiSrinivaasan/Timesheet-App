@@ -30,8 +30,8 @@ import { environment } from '../environments/environment';
 
 import { AngularFireModule } from '@angular/fire';
 import { AngularFireAuthModule } from '@angular/fire/auth';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { StoreModule } from '@ngrx/store';
 import { ToastrModule } from 'ngx-toastr';
 import * as store from './store/store';
@@ -49,13 +49,13 @@ import * as store from './store/store';
     PerfectScrollbarModule,
     BsDropdownModule.forRoot(),
     AngularFireModule.initializeApp(environment.firebase),
-    FormsModule,
-    ReactiveFormsModule,
     AngularFireAuthModule,
     ToastrModule.forRoot({
       progressBar: true,
     }),
     StoreModule.forRoot(store.reducers, { metaReducers: store.metaReducers }),
+    FormsModule,
+    ReactiveFormsModule,
   ],
   declarations: [AppComponent, ...APP_CONTAINERS, LoginComponent],
   providers: [
