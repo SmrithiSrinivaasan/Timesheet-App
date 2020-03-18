@@ -18,14 +18,16 @@ export class ListComponent implements OnInit {
     const initialState = {
       title: 'Add Project',
       inputLabel: 'Project Name',
-      saveButtonText: 'Save'
+      saveButtonText: 'Save',
     };
-  this.bsModalRef = this.modalService.show(InputModalComponent, {initialState});
-  this.bsModalRef.content.closeBtnName = 'Close';
-  // communication with input-modal
-  this.bsModalRef.content.save.subscribe((data: string) => {
-    this.bsModalRef.hide();
-  });
+    this.bsModalRef = this.modalService.show(InputModalComponent, {
+      initialState,
+    });
+    this.bsModalRef.content.closeBtnName = 'Close';
+    // communication with input-modal
+    this.bsModalRef.content.save.subscribe((data: string) => {
+      this.bsModalRef.hide();
+    });
   }
 
   hasProject() {

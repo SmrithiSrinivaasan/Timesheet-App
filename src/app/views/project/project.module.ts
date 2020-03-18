@@ -8,7 +8,6 @@ import { InputModalComponent } from '../../shared/components/input-modal/input-m
 import { ListComponent } from './list/list.component';
 import { ProjectRoutingModule } from './project-routing.module';
 
-
 @NgModule({
   declarations: [ListComponent, InputModalComponent],
   imports: [

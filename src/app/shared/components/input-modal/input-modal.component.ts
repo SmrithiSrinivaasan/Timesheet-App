@@ -7,20 +7,21 @@ import { BsModalRef } from 'ngx-bootstrap/modal';
   templateUrl: './input-modal.component.html',
 })
 export class InputModalComponent implements OnInit {
-
   title: string;
   inputLabel: string;
   saveButtonText: string;
 
   inputForm = this.formBuilder.group({
-    name : ['', [Validators.required, Validators.minLength(3)]]
+    name: ['', [Validators.required, Validators.minLength(3)]],
   });
 
   @Output() save = new EventEmitter(); // communication to parent
-  constructor(private bsModalRef: BsModalRef, private formBuilder: FormBuilder) { }
+  constructor(
+    private bsModalRef: BsModalRef,
+    private formBuilder: FormBuilder
+  ) {}
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   get name() {
     return this.inputForm.get('name');
@@ -33,5 +34,4 @@ export class InputModalComponent implements OnInit {
   close() {
     this.bsModalRef.hide();
   }
-
 }
