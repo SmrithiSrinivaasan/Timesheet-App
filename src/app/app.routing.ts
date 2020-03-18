@@ -38,9 +38,7 @@ export const routes: Routes = [
       {
         path: 'project',
         loadChildren: () =>
-          import('./views/project/project.module').then(
-            m => m.ProjectModule
-          ),
+          import('./views/project/project.module').then(m => m.ProjectModule),
       },
     ],
   },

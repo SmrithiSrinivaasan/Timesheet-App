@@ -3,23 +3,18 @@ import { Component, OnInit } from '@angular/core';
 @Component({
   selector: 'app-list',
   templateUrl: './list.component.html',
-  styleUrls: ['./list.component.css']
+  styleUrls: ['./list.component.css'],
 })
 export class ListComponent implements OnInit {
+  projects = [];
 
-  projects = [] ;
+  constructor() {}
 
-  constructor() { }
+  ngOnInit(): void {}
 
-  ngOnInit(): void {
-  }
-
-  onAdd() {
-
-  }
+  onAdd() {}
 
   hasProject() {
-    return this.projects.length > 0 ;
+    return this.projects.length > 0;
   }
-
 }

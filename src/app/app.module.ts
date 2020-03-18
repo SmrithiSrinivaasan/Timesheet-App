@@ -57,7 +57,7 @@ import * as store from './store/store';
     }),
     StoreModule.forRoot(store.reducers, { metaReducers: store.metaReducers }),
   ],
-  declarations: [AppComponent, ...APP_CONTAINERS, LoginComponent ],
+  declarations: [AppComponent, ...APP_CONTAINERS, LoginComponent],
   providers: [
     {
       provide: LocationStrategy,
