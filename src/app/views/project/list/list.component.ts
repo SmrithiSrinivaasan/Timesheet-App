@@ -10,7 +10,7 @@ import { ProjectService } from '../project.service';
   styleUrls: ['./list.component.css'],
 })
 export class ListComponent implements OnInit {
-  projects = [];
+  projects = ['project'];
   bsModalRef: BsModalRef;
   constructor(
     private modalService: BsModalService,
@@ -25,6 +25,8 @@ export class ListComponent implements OnInit {
       title: 'Add Project',
       inputLabel: 'Project Name',
       saveButtonText: 'Save',
+      type: 'Add',
+      initialValue: '',
     };
     this.bsModalRef = this.modalService.show(InputModalComponent, {
       initialState,
@@ -46,6 +48,37 @@ export class ListComponent implements OnInit {
       );
     });
   }
+
+  onEdit() {
+    const initialState = {
+      title: 'Edit Project',
+      inputLabel: 'Project Name',
+      saveButtonText: 'Update',
+      type: 'Edit',
+      initialValue: 'Project 1',
+    };
+    this.bsModalRef = this.modalService.show(InputModalComponent, {
+      initialState,
+    });
+    this.bsModalRef.content.closeBtnName = 'Close';
+
+    // communication with input-modal
+    this.bsModalRef.content.save.subscribe((data: string) => {
+      // this.projectService.addProject(data).then(
+      //   (response: any) => {
+      //     console.log('response', response);
+      //     this.toast.success('Project Updated Successfully !');
+      //     this.bsModalRef.hide();
+      //   },
+      //   (error: any) => {
+      //     console.log('error', error);
+      //     this.toast.error(error.message);
+      //   }
+      // );
+    });
+  }
+
+  onDelete() {}
 
   hasProject() {
     return this.projects.length > 0;

@@ -10,6 +10,8 @@ export class InputModalComponent implements OnInit {
   title: string;
   inputLabel: string;
   saveButtonText: string;
+  type: string;
+  initialValue: string;
 
   inputForm = this.formBuilder.group({
     name: ['', [Validators.required, Validators.minLength(3)]],
@@ -21,7 +23,13 @@ export class InputModalComponent implements OnInit {
     private formBuilder: FormBuilder
   ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    if (this.type === 'Edit') {
+      this.inputForm.patchValue({
+        name: this.initialValue,
+      });
+    }
+  }
 
   get name() {
     return this.inputForm.get('name');
