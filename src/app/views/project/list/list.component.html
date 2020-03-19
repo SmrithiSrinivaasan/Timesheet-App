@@ -13,7 +13,14 @@
       </tr>
     </thead>
     <tbody>
-
+      <tr>
+        <td>1</td>
+        <td>Temp Project</td>
+        <td>
+          <button (click)=onEdit() class ='btn-primary'>Edit</button>
+          <button (click)=onDelete() class ='btn-primary'>Delete</button>
+        </td>
+      </tr>
     </tbody>
   </table>
   <button (click)=onAdd() class='fab' mat-fab color='primary'>
