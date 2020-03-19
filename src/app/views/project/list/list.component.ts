@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { ToastrService } from 'ngx-toastr';
 import { InputModalComponent } from '../../../shared/components/input-modal/input-modal.component';
+import { ProjectService } from '../project.service';
 
 @Component({
   selector: 'app-list',
@@ -10,7 +12,7 @@ import { InputModalComponent } from '../../../shared/components/input-modal/inpu
 export class ListComponent implements OnInit {
   projects = [];
   bsModalRef: BsModalRef;
-  constructor(private modalService: BsModalService) {}
+  constructor(private modalService: BsModalService, private projectService: ProjectService, private toast: ToastrService) {}
 
   ngOnInit(): void {}
 
@@ -24,9 +26,19 @@ export class ListComponent implements OnInit {
       initialState,
     });
     this.bsModalRef.content.closeBtnName = 'Close';
+
     // communication with input-modal
     this.bsModalRef.content.save.subscribe((data: string) => {
-      this.bsModalRef.hide();
+      this.projectService.addProject(data).then((response: any) => {
+        console.log('response', response);
+        this.toast.success('Project Added Successfully !');
+        this.bsModalRef.hide();
+      },
+      (error: any) => {
+        console.log('error', error);
+        this.toast.error(error.message);
+      }
+      );
     });
   }
 

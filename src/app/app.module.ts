@@ -35,6 +35,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { StoreModule } from '@ngrx/store';
 import { ToastrModule } from 'ngx-toastr';
 import * as store from './store/store';
+import { AngularFireDatabaseModule } from '@angular/fire/database';
 
 @NgModule({
   imports: [
@@ -56,6 +57,7 @@ import * as store from './store/store';
     StoreModule.forRoot(store.reducers, { metaReducers: store.metaReducers }),
     FormsModule,
     ReactiveFormsModule,
+    AngularFireDatabaseModule
   ],
   declarations: [AppComponent, ...APP_CONTAINERS, LoginComponent],
   providers: [
