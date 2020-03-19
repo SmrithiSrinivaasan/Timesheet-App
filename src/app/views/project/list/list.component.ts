@@ -87,17 +87,15 @@ export class ListComponent implements OnInit {
 
     // communication with input-modal
     this.bsModalRef.content.save.subscribe((data: string) => {
-      // this.projectService.addProject(data).then(
-      //   (response: any) => {
-      //     console.log('response', response);
-      //     this.toast.success('Project Updated Successfully !');
-      //     this.bsModalRef.hide();
-      //   },
-      //   (error: any) => {
-      //     console.log('error', error);
-      //     this.toast.error(error.message);
-      //   }
-      // );
+      this.projectService.editProject(project.key, data).then(
+        (response: any) => {
+          this.toast.success('Project Updated Successfully !');
+          this.bsModalRef.hide();
+        },
+        (error: any) => {
+          this.toast.error(error.message);
+        }
+      );
     });
   }
 

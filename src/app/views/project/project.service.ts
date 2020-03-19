@@ -16,6 +16,10 @@ export class ProjectService {
     return this.projectRef.push(data);
   }
 
+  editProject(key: string, data: any) {
+    return this.projectRef.update(key, data);
+  }
+
   getProjects() {
     return this.projectRef;
   }
