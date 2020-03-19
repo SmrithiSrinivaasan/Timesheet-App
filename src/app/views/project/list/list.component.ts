@@ -12,7 +12,11 @@ import { ProjectService } from '../project.service';
 export class ListComponent implements OnInit {
   projects = [];
   bsModalRef: BsModalRef;
-  constructor(private modalService: BsModalService, private projectService: ProjectService, private toast: ToastrService) {}
+  constructor(
+    private modalService: BsModalService,
+    private projectService: ProjectService,
+    private toast: ToastrService
+  ) {}
 
   ngOnInit(): void {}
 
@@ -29,15 +33,16 @@ export class ListComponent implements OnInit {
 
     // communication with input-modal
     this.bsModalRef.content.save.subscribe((data: string) => {
-      this.projectService.addProject(data).then((response: any) => {
-        console.log('response', response);
-        this.toast.success('Project Added Successfully !');
-        this.bsModalRef.hide();
-      },
-      (error: any) => {
-        console.log('error', error);
-        this.toast.error(error.message);
-      }
+      this.projectService.addProject(data).then(
+        (response: any) => {
+          console.log('response', response);
+          this.toast.success('Project Added Successfully !');
+          this.bsModalRef.hide();
+        },
+        (error: any) => {
+          console.log('error', error);
+          this.toast.error(error.message);
+        }
       );
     });
   }

@@ -31,11 +31,11 @@ import { environment } from '../environments/environment';
 import { AngularFireModule } from '@angular/fire';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 
+import { AngularFireDatabaseModule } from '@angular/fire/database';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { StoreModule } from '@ngrx/store';
 import { ToastrModule } from 'ngx-toastr';
 import * as store from './store/store';
-import { AngularFireDatabaseModule } from '@angular/fire/database';
 
 @NgModule({
   imports: [
@@ -57,7 +57,7 @@ import { AngularFireDatabaseModule } from '@angular/fire/database';
     StoreModule.forRoot(store.reducers, { metaReducers: store.metaReducers }),
     FormsModule,
     ReactiveFormsModule,
-    AngularFireDatabaseModule
+    AngularFireDatabaseModule,
   ],
   declarations: [AppComponent, ...APP_CONTAINERS, LoginComponent],
   providers: [

@@ -18,7 +18,6 @@ import { ProjectRoutingModule } from './project-routing.module';
     ModalModule.forRoot(),
     FormsModule,
     ReactiveFormsModule,
-
   ],
   entryComponents: [InputModalComponent],
   providers: [BsModalRef],
