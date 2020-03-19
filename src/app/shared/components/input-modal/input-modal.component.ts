@@ -26,7 +26,7 @@ export class InputModalComponent implements OnInit {
   ngOnInit(): void {
     if (this.type === 'Edit') {
       this.inputForm.patchValue({
-        name : this.initialValue
+        name: this.initialValue,
       });
     }
   }

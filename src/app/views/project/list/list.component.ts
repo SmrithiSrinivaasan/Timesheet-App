@@ -26,7 +26,7 @@ export class ListComponent implements OnInit {
       inputLabel: 'Project Name',
       saveButtonText: 'Save',
       type: 'Add',
-      initialValue: ''
+      initialValue: '',
     };
     this.bsModalRef = this.modalService.show(InputModalComponent, {
       initialState,
@@ -55,7 +55,7 @@ export class ListComponent implements OnInit {
       inputLabel: 'Project Name',
       saveButtonText: 'Update',
       type: 'Edit',
-      initialValue: 'Project 1'
+      initialValue: 'Project 1',
     };
     this.bsModalRef = this.modalService.show(InputModalComponent, {
       initialState,
@@ -78,9 +78,7 @@ export class ListComponent implements OnInit {
     });
   }
 
-  onDelete() {
-
-  }
+  onDelete() {}
 
   hasProject() {
     return this.projects.length > 0;
