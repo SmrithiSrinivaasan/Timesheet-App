@@ -1,0 +1,26 @@
+<div class="modal-primary" role="document">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h1 class="modal-title" style="font-size: large;">{{title}} </h1>
+      <button type="button" class="close" aria-label="Close" (click)="close()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+
+    <div class="modal-body">
+      <form [formGroup]="inputForm"> <!-- This links the form to the defined inputForm-->
+        <label style="font-size: large;"> {{inputLabel}}</label>
+        <input [class.is-invalid]='name.touched && name.invalid' class="form-control" formControlName="name" type="text" />
+        <div *ngIf="name.touched && name.invalid">
+          <small *ngIf="name.errors?.required" class='text-danger'> {{inputLabel}} is required</small>
+          <small *ngIf="name.errors?.minlength" class='text-danger'> {{inputLabel}} should have at least 3 characters</small>
+        </div>
+      </form>
+    </div>
+
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" (click)="close()">Cancel</button>
+      <button [disabled]='inputForm.invalid' type="button" class="btn btn-primary" (click)="confirm()">{{saveButtonText}}</button>
+    </div>
+  </div>
+</div>

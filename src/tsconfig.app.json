@@ -10,6 +10,7 @@
       "@angular/*": ["../node_modules/@angular/*"]
     }
   },
+
   "angularCompilerOptions": {
     "enableIvy": false
   },
