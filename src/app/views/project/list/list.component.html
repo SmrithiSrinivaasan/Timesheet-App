@@ -1,10 +1,14 @@
-<div class='container-fluid'>
-  <div class='card'>
-    <div *ngIf="!hasProject()" class="card-body">
-      No Projects Available - Click to Add
-    </div>
+<div class='card animated fadeIn'>
+  <div *ngIf="!isPageLoading && !hasProject()" class="card-body">
+    No Projects Available - Click to Add
   </div>
-  <table *ngIf="hasProject()" class='table table-bordered'>
+
+  <div class="loading-indicator" *ngIf="isPageLoading">
+    <mat-spinner style="margin:0 auto;" diameter='40'></mat-spinner>
+    <h1 style="text-align: center">Loading...</h1>
+  </div>
+
+  <table *ngIf="!isPageLoading && hasProject()" class='table table-bordered'>
     <thead>
       <tr>
         <th>S.No.</th>
@@ -13,16 +17,17 @@
       </tr>
     </thead>
     <tbody>
-      <tr>
-        <td>1</td>
-        <td>Temp Project</td>
+      <tr *ngFor="let project of projects, index as i">
+        <td>{{i+1}}</td>
+        <td>{{project.name}}</td>
         <td>
-          <button (click)=onEdit() class ='btn-primary'>Edit</button>
+          <button (click)=onEdit(project) class ='btn-primary'>Edit</button>
           <button (click)=onDelete() class ='btn-primary'>Delete</button>
         </td>
       </tr>
     </tbody>
   </table>
+
   <button (click)=onAdd() class='fab' mat-fab color='primary'>
     <mat-icon>add</mat-icon>
   </button>

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { ToastrService } from 'ngx-toastr';
+import { map } from 'rxjs/operators';
 import { InputModalComponent } from '../../../shared/components/input-modal/input-modal.component';
 import { ProjectService } from '../project.service';
 
@@ -10,15 +11,39 @@ import { ProjectService } from '../project.service';
   styleUrls: ['./list.component.css'],
 })
 export class ListComponent implements OnInit {
-  projects = ['project'];
+  projects = [];
   bsModalRef: BsModalRef;
+  isPageLoading = false;
+
   constructor(
     private modalService: BsModalService,
     private projectService: ProjectService,
     private toast: ToastrService
   ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.isPageLoading = true;
+    // snapshotChanges is used to update changes without refreshing
+    // pipe combines multiple functions
+    this.projectService
+      .getProjects()
+      .snapshotChanges()
+      .pipe(
+        map(changes =>
+          changes.map((c: any, index: number) => {
+            return {
+              id: index + 1,
+              key: c.key,
+              name: c.payload.val().name,
+            };
+          })
+        )
+      )
+      .subscribe(datas => {
+        this.projects = datas;
+        this.isPageLoading = false;
+      });
+  }
 
   onAdd() {
     const initialState = {
@@ -37,25 +62,23 @@ export class ListComponent implements OnInit {
     this.bsModalRef.content.save.subscribe((data: string) => {
       this.projectService.addProject(data).then(
         (response: any) => {
-          console.log('response', response);
           this.toast.success('Project Added Successfully !');
           this.bsModalRef.hide();
         },
         (error: any) => {
-          console.log('error', error);
           this.toast.error(error.message);
         }
       );
     });
   }
 
-  onEdit() {
+  onEdit(project: any) {
     const initialState = {
       title: 'Edit Project',
       inputLabel: 'Project Name',
       saveButtonText: 'Update',
       type: 'Edit',
-      initialValue: 'Project 1',
+      initialValue: project.name,
     };
     this.bsModalRef = this.modalService.show(InputModalComponent, {
       initialState,

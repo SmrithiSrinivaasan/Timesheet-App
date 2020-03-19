@@ -15,4 +15,8 @@ export class ProjectService {
   addProject(data: any) {
     return this.projectRef.push(data);
   }
+
+  getProjects() {
+    return this.projectRef;
+  }
 }
