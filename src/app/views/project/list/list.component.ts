@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { ToastrService } from 'ngx-toastr';
 import { map } from 'rxjs/operators';
+import { DeleteModalComponent } from '../../../shared/components/delete-modal/delete-modal.component';
 import { InputModalComponent } from '../../../shared/components/input-modal/input-modal.component';
 import { ProjectService } from '../project.service';
 
@@ -99,7 +100,32 @@ export class ListComponent implements OnInit {
     });
   }
 
-  onDelete() {}
+  onDelete(project: any) {
+    const initialState = {
+      title: 'Delete Project',
+      saveButtonText: 'Delete',
+      message: 'Are you sure you want to delete this project ? ',
+    };
+    this.bsModalRef = this.modalService.show(DeleteModalComponent, {
+      initialState,
+    });
+    this.bsModalRef.content.closeBtnName = 'Close';
+
+    // communication with input-modal
+    this.bsModalRef.content.delete.subscribe((response: boolean) => {
+      if (response) {
+        this.projectService.deleteProject(project.key).then(
+          () => {
+            this.toast.success('Project Deleted Successfully !');
+            this.bsModalRef.hide();
+          },
+          (error: any) => {
+            this.toast.error(error.message);
+          }
+        );
+      }
+    });
+  }
 
   hasProject() {
     return this.projects.length > 0;

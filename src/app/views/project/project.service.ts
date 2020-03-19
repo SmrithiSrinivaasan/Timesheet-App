@@ -20,6 +20,9 @@ export class ProjectService {
     return this.projectRef.update(key, data);
   }
 
+  deleteProject(key: string) {
+    return this.projectRef.remove(key);
+  }
   getProjects() {
     return this.projectRef;
   }
