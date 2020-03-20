@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { ToastrService } from 'ngx-toastr';
 import { map } from 'rxjs/operators';
+import { DeleteModalComponent } from '../../../shared/components/delete-modal/delete-modal.component';
 import { InputModalComponent } from '../../../shared/components/input-modal/input-modal.component';
 import { PhaseService } from '../phase.service';
 
@@ -96,6 +97,33 @@ export class ListComponent implements OnInit {
         }
       );
     });
+  }
+
+  onDelete(phase: any) {
+    const initialState = {
+      title: 'Delete Phase',
+      saveButtonText: 'Delete',
+      message: 'Are you sure you want to delete this phase ? ',
+    };
+    this.bsModalRef = this.modalService.show(DeleteModalComponent, {
+      initialState,
+    });
+    this.bsModalRef.content.closeBtnName = 'Close';
+
+    // communication with input-modal
+    // this.bsModalRef.content.delete.subscribe((response: boolean) => {
+    //   if (response) {
+    //     this.phaseService.deletePhase(phase.key).then(
+    //       () => {
+    //         this.toast.success('Phase Deleted Successfully !');
+    //         this.bsModalRef.hide();
+    //       },
+    //       (error: any) => {
+    //         this.toast.error(error.message);
+    //       }
+    //     );
+    //   }
+    // });
   }
 
   hasPhase() {
