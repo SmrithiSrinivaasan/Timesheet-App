@@ -20,7 +20,29 @@ export class ListComponent implements OnInit {
     private phaseService: PhaseService
   ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.isPageLoading = true;
+    // snapshotChanges is used to update changes without refreshing
+    // pipe combines multiple functions
+    this.phaseService
+      .getPhases()
+      .snapshotChanges()
+      .pipe(
+        map(changes =>
+          changes.map((c: any, index: number) => {
+            return {
+              id: index + 1,
+              key: c.key,
+              name: c.payload.val().name,
+            };
+          })
+        )
+      )
+      .subscribe(datas => {
+        this.phases = datas;
+        this.isPageLoading = false;
+      });
+  }
 
   onAdd() {
     const initialState = {
