@@ -32,9 +32,9 @@ import { AngularFireModule } from '@angular/fire';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 
 import { AngularFireDatabaseModule } from '@angular/fire/database';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { StoreModule } from '@ngrx/store';
 import { ToastrModule } from 'ngx-toastr';
+import { SharedModule } from './shared/shared/shared.module';
 import * as store from './store/store';
 
 @NgModule({
@@ -51,14 +51,14 @@ import * as store from './store/store';
     BsDropdownModule.forRoot(),
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireAuthModule,
+    AngularFireDatabaseModule,
     ToastrModule.forRoot({
       progressBar: true,
     }),
     StoreModule.forRoot(store.reducers, { metaReducers: store.metaReducers }),
-    FormsModule,
-    ReactiveFormsModule,
-    AngularFireDatabaseModule,
+    SharedModule,
   ],
+
   declarations: [AppComponent, ...APP_CONTAINERS, LoginComponent],
   providers: [
     {

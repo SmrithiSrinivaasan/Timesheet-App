@@ -40,6 +40,11 @@ export const routes: Routes = [
         loadChildren: () =>
           import('./views/project/project.module').then(m => m.ProjectModule),
       },
+      {
+        path: 'phase',
+        loadChildren: () =>
+          import('./views/phase/phase.module').then(m => m.PhaseModule),
+      },
     ],
   },
 ];

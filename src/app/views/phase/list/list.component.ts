@@ -4,29 +4,29 @@ import { ToastrService } from 'ngx-toastr';
 import { map } from 'rxjs/operators';
 import { DeleteModalComponent } from '../../../shared/components/delete-modal/delete-modal.component';
 import { InputModalComponent } from '../../../shared/components/input-modal/input-modal.component';
-import { ProjectService } from '../project.service';
+import { PhaseService } from '../phase.service';
 
 @Component({
   selector: 'app-list',
   templateUrl: './list.component.html',
 })
 export class ListComponent implements OnInit {
-  projects = [];
+  phases = [];
   bsModalRef: BsModalRef;
   isPageLoading = false;
 
   constructor(
     private modalService: BsModalService,
-    private projectService: ProjectService,
-    private toast: ToastrService
+    private toast: ToastrService,
+    private phaseService: PhaseService
   ) {}
 
   ngOnInit(): void {
     this.isPageLoading = true;
     // snapshotChanges is used to update changes without refreshing
     // pipe combines multiple functions
-    this.projectService
-      .getProjects()
+    this.phaseService
+      .getPhases()
       .snapshotChanges()
       .pipe(
         map(changes =>
@@ -40,15 +40,15 @@ export class ListComponent implements OnInit {
         )
       )
       .subscribe(datas => {
-        this.projects = datas;
+        this.phases = datas;
         this.isPageLoading = false;
       });
   }
 
   onAdd() {
     const initialState = {
-      title: 'Add Project',
-      inputLabel: 'Project Name',
+      title: 'Add Phase',
+      inputLabel: 'Phase Name',
       saveButtonText: 'Save',
       type: 'Add',
       initialValue: '',
@@ -60,9 +60,9 @@ export class ListComponent implements OnInit {
 
     // communication with input-modal
     this.bsModalRef.content.save.subscribe((data: string) => {
-      this.projectService.addProject(data).then(
+      this.phaseService.addPhase(data).then(
         (response: any) => {
-          this.toast.success('Project Added Successfully !');
+          this.toast.success('Phase Added Successfully !');
           this.bsModalRef.hide();
         },
         (error: any) => {
@@ -72,13 +72,13 @@ export class ListComponent implements OnInit {
     });
   }
 
-  onEdit(project: any) {
+  onEdit(phase: any) {
     const initialState = {
-      title: 'Edit Project',
-      inputLabel: 'Project Name',
+      title: 'Edit Phase',
+      inputLabel: 'Phase Name',
       saveButtonText: 'Update',
       type: 'Edit',
-      initialValue: project.name,
+      initialValue: phase.name,
     };
     this.bsModalRef = this.modalService.show(InputModalComponent, {
       initialState,
@@ -87,9 +87,9 @@ export class ListComponent implements OnInit {
 
     // communication with input-modal
     this.bsModalRef.content.save.subscribe((data: string) => {
-      this.projectService.editProject(project.key, data).then(
+      this.phaseService.editPhase(phase.key, data).then(
         (response: any) => {
-          this.toast.success('Project Updated Successfully !');
+          this.toast.success('Phase Updated Successfully !');
           this.bsModalRef.hide();
         },
         (error: any) => {
@@ -99,11 +99,11 @@ export class ListComponent implements OnInit {
     });
   }
 
-  onDelete(project: any) {
+  onDelete(phase: any) {
     const initialState = {
-      title: 'Delete Project',
+      title: 'Delete Phase',
       saveButtonText: 'Delete',
-      message: 'Are you sure you want to delete this project ? ',
+      message: 'Are you sure you want to delete this phase ? ',
     };
     this.bsModalRef = this.modalService.show(DeleteModalComponent, {
       initialState,
@@ -113,9 +113,9 @@ export class ListComponent implements OnInit {
     // communication with input-modal
     this.bsModalRef.content.delete.subscribe((response: boolean) => {
       if (response) {
-        this.projectService.deleteProject(project.key).then(
+        this.phaseService.deletePhase(phase.key).then(
           () => {
-            this.toast.success('Project Deleted Successfully !');
+            this.toast.success('Phase Deleted Successfully !');
             this.bsModalRef.hide();
           },
           (error: any) => {
@@ -126,7 +126,7 @@ export class ListComponent implements OnInit {
     });
   }
 
-  hasProject() {
-    return this.projects.length > 0;
+  hasPhase() {
+    return this.phases.length > 0;
   }
 }
