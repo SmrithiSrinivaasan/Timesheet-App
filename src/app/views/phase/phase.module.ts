@@ -5,11 +5,12 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { BsModalRef, ModalModule } from 'ngx-bootstrap/modal';
+import { InputModalComponent } from '../../shared/components/input-modal/input-modal.component';
 import { ListComponent } from '../phase/list/list.component';
 import { PhaseRoutingModule } from '../phase/phase-routing.module';
 
 @NgModule({
-  declarations: [ListComponent],
+  declarations: [ListComponent, InputModalComponent],
   imports: [
     PhaseRoutingModule,
     CommonModule,
@@ -20,7 +21,7 @@ import { PhaseRoutingModule } from '../phase/phase-routing.module';
     ReactiveFormsModule,
     MatProgressSpinnerModule,
   ],
-  entryComponents: [],
+  entryComponents: [InputModalComponent],
   providers: [BsModalRef],
 })
 export class PhaseModule {}
