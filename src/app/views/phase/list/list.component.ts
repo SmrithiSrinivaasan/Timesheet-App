@@ -3,6 +3,7 @@ import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { ToastrService } from 'ngx-toastr';
 import { map } from 'rxjs/operators';
 import { InputModalComponent } from '../../../shared/components/input-modal/input-modal.component';
+import { PhaseService } from '../phase.service';
 
 @Component({
   selector: 'app-list',
@@ -15,7 +16,8 @@ export class ListComponent implements OnInit {
 
   constructor(
     private modalService: BsModalService,
-    private toast: ToastrService
+    private toast: ToastrService,
+    private phaseService: PhaseService
   ) {}
 
   ngOnInit(): void {}
@@ -34,17 +36,17 @@ export class ListComponent implements OnInit {
     this.bsModalRef.content.closeBtnName = 'Close';
 
     // communication with input-modal
-    // this.bsModalRef.content.save.subscribe((data: string) => {
-    //   this.phaseService.addPhase(data).then(
-    //     (response: any) => {
-    //       this.toast.success('Phase Added Successfully !');
-    //       this.bsModalRef.hide();
-    //     },
-    //     (error: any) => {
-    //       this.toast.error(error.message);
-    //     }
-    //   );
-    // });
+    this.bsModalRef.content.save.subscribe((data: string) => {
+      this.phaseService.addPhase(data).then(
+        (response: any) => {
+          this.toast.success('Phase Added Successfully !');
+          this.bsModalRef.hide();
+        },
+        (error: any) => {
+          this.toast.error(error.message);
+        }
+      );
+    });
   }
 
   hasPhase() {
