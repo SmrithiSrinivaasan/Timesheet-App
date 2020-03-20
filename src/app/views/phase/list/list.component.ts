@@ -71,6 +71,33 @@ export class ListComponent implements OnInit {
     });
   }
 
+  onEdit(phase: any) {
+    const initialState = {
+      title: 'Edit Phase',
+      inputLabel: 'Phase Name',
+      saveButtonText: 'Update',
+      type: 'Edit',
+      initialValue: phase.name,
+    };
+    this.bsModalRef = this.modalService.show(InputModalComponent, {
+      initialState,
+    });
+    this.bsModalRef.content.closeBtnName = 'Close';
+
+    // communication with input-modal
+    // this.bsModalRef.content.save.subscribe((data: string) => {
+    //   this.phaseService.editPhase(phase.key, data).then(
+    //     (response: any) => {
+    //       this.toast.success('Phase Updated Successfully !');
+    //       this.bsModalRef.hide();
+    //     },
+    //     (error: any) => {
+    //       this.toast.error(error.message);
+    //     }
+    //   );
+    // });
+  }
+
   hasPhase() {
     return this.phases.length > 0;
   }
