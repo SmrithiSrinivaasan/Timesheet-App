@@ -6,3 +6,11 @@
 
 // If you want to add something do it here
 @import "custom";
+
+.fab{
+  position: fixed !important;
+  bottom: 75px;
+  right: 25px;
+  float: right;
+  outline: none !important;
+}
