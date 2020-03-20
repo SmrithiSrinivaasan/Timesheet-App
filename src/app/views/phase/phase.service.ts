@@ -20,9 +20,9 @@ export class PhaseService {
     return this.phaseRef.update(key, data);
   }
 
-  // deletePhase(key: string) {
-  //   return this.phaseRef.remove(key);
-  // }
+  deletePhase(key: string) {
+    return this.phaseRef.remove(key);
+  }
   getPhases() {
     return this.phaseRef;
   }

@@ -111,19 +111,19 @@ export class ListComponent implements OnInit {
     this.bsModalRef.content.closeBtnName = 'Close';
 
     // communication with input-modal
-    // this.bsModalRef.content.delete.subscribe((response: boolean) => {
-    //   if (response) {
-    //     this.phaseService.deletePhase(phase.key).then(
-    //       () => {
-    //         this.toast.success('Phase Deleted Successfully !');
-    //         this.bsModalRef.hide();
-    //       },
-    //       (error: any) => {
-    //         this.toast.error(error.message);
-    //       }
-    //     );
-    //   }
-    // });
+    this.bsModalRef.content.delete.subscribe((response: boolean) => {
+      if (response) {
+        this.phaseService.deletePhase(phase.key).then(
+          () => {
+            this.toast.success('Phase Deleted Successfully !');
+            this.bsModalRef.hide();
+          },
+          (error: any) => {
+            this.toast.error(error.message);
+          }
+        );
+      }
+    });
   }
 
   hasPhase() {
