@@ -16,9 +16,9 @@ export class PhaseService {
     return this.phaseRef.push(data);
   }
 
-  // editPhase(key: string, data: any) {
-  //   return this.phaseRef.update(key, data);
-  // }
+  editPhase(key: string, data: any) {
+    return this.phaseRef.update(key, data);
+  }
 
   // deletePhase(key: string) {
   //   return this.phaseRef.remove(key);
