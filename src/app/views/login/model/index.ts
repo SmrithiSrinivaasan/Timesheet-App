@@ -2,6 +2,7 @@ export interface IAuthDetails {
   uid: string;
   name: string;
   email: string;
+  role: string;
   isLoggedIn: boolean;
 }
 // I is due to lint error

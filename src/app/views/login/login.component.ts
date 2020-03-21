@@ -4,6 +4,8 @@ import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { ToastrService } from 'ngx-toastr';
 import { AuthenticationService } from '../../services/authentication.service';
+import { UserService } from '../user/user.service';
+import { IAuthDetails } from './model';
 import * as updateAuthAction from './store/actions/updateAuthAction';
 
 @Component({
@@ -23,7 +25,8 @@ export class LoginComponent implements OnInit {
     private formBuilder: FormBuilder,
     private authenticationService: AuthenticationService,
     private toast: ToastrService,
-    private store: Store<any>
+    private store: Store<any>,
+    private userService: UserService
   ) {}
 
   ngOnInit() {}
@@ -40,20 +43,39 @@ export class LoginComponent implements OnInit {
     this.authenticationService
       .SignIn(this.loginForm.value.email, this.loginForm.value.password)
       .then((response: any) => {
-        this.submitted = false;
-
         // refer CRUD
-        const authDetails = {
+        const authDetails: IAuthDetails = {
           uid: response.user.uid,
-          name: response.user.displayName,
+          name: '',
+          role: '',
           email: response.user.email,
           isLoggedIn: true,
         };
-        this.store.dispatch(new updateAuthAction.UpdateAuth(authDetails));
-        // this calls the actions folder then from there reducer and stores it in the store
-
-        this.toast.success('Login Successful !');
-        this.router.navigate(['/dashboard']);
+        if (response) {
+          const userKey = this.loginForm.value.email.replace('.', '_dot_');
+          this.userService
+            .getSelectedUser(userKey)
+            .then((snapshot: any) => {
+              const val = snapshot.val();
+              if (val) {
+                console.log('val is', val);
+                authDetails.role = val.role;
+                authDetails.name = val.name;
+              } else {
+                authDetails.role = 'admin';
+                authDetails.name = 'admin';
+              }
+              this.submitted = false;
+              this.store.dispatch(new updateAuthAction.UpdateAuth(authDetails));
+              // this calls the actions folder then from there reducer and stores it in the store
+              this.toast.success('Login Successful !');
+              this.router.navigate(['/dashboard']);
+            })
+            .catch((error: any) => {
+              this.submitted = false;
+              this.toast.error(error.message);
+            });
+        }
       })
       .catch((error: any) => {
         this.submitted = false;

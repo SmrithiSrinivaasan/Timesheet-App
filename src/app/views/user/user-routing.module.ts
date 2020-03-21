@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { AuthGuardService } from '../../shared/guards/auth-guard.service';
 import { AddComponent } from './add/add.component';
 import { ListComponent } from './list/list.component';
 
@@ -8,7 +9,9 @@ const routes: Routes = [
     path: '',
     data: {
       title: 'Users',
+      roles: ['admin'],
     },
+    canActivate: [AuthGuardService],
     children: [
       {
         path: '',
