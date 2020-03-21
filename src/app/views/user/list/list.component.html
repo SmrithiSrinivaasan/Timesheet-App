@@ -12,7 +12,8 @@
     <thead>
       <tr>
         <th>S.No.</th>
-        <th>Users</th>
+        <th>User Name</th>
+        <th>User Email</th>
         <th>Options</th>
       </tr>
     </thead>
@@ -20,6 +21,7 @@
       <tr *ngFor="let user of users, index as i">
         <td>{{i+1}}</td>
         <td>{{user.name}}</td>
+        <td>{{user.email}}</td>
         <td>
           <button (click)=onEdit(user) class ='btn-primary'>Edit</button>
           <button (click)=onDelete(user) class ='btn-primary'>Delete</button>
