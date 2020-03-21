@@ -1,0 +1,36 @@
+<div class='card animated fadeIn'>
+  <div *ngIf="!isPageLoading && !hasUser()" class="card-body">
+    No Users Available - Click to Add
+  </div>
+
+  <div class="loading-indicator" *ngIf="isPageLoading">
+    <mat-spinner style="margin:0 auto;" diameter='40'></mat-spinner>
+    <h1 style="text-align: center">Loading...</h1>
+  </div>
+
+  <table *ngIf="!isPageLoading && hasUser()" class='table table-bordered'>
+    <thead>
+      <tr>
+        <th>S.No.</th>
+        <th>User Name</th>
+        <th>User Email</th>
+        <th>Options</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let user of users, index as i">
+        <td>{{i+1}}</td>
+        <td>{{user.name}}</td>
+        <td>{{user.email}}</td>
+        <td>
+          <button (click)=onEdit(user) class ='btn-primary'>Edit</button>
+          <button (click)=onDelete(user) class ='btn-primary'>Delete</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <button (click)=onAdd() class='fab' mat-fab color='primary'>
+    <mat-icon>add</mat-icon>
+  </button>
+</div>
