@@ -1,0 +1,46 @@
+<div class="container-fluid">
+  <div class="card">
+    <div class="card-header">
+      <div class="row">
+        <div class="col-3 text-left">
+          <button (click)=onBack() class="btn btn-primary">BACK</button>
+        </div>
+        <div class="col-6 text-center">
+          <h1 style="size: 100px;">ADD USER</h1>
+        </div>
+        <div class="col-3 text-right">
+          <button [disabled]='userForm.invalid' (click)=onSave() class="btn btn-primary">SAVE</button>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <form [formGroup]="userForm"> <!-- This links the form to the defined userForm-->
+        <div class="row">
+          <div class="col-12">
+            <div class="form-group">
+              <label> User Name </label>
+              <input [class.is-invalid]='name.touched && name.invalid' type="text" class="form-control" formControlName="name" />
+              <div *ngIf="name.touched && name.invalid">
+                <small *ngIf="name.errors?.required" class='text-danger'> User Name is required</small>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-12">
+            <div class="form-group">
+              <label> User Email </label>
+              <input [class.is-invalid]='email.touched && email.invalid' type="text" class="form-control" formControlName="email" />
+              <div *ngIf="email.touched && email.invalid">
+                <small *ngIf="email.errors?.required" class='text-danger'> User Email is required</small>
+                <small *ngIf="email.errors?.email" class='text-danger'> Invali User Email</small>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

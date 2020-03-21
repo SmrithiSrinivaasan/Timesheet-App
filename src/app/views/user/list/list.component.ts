@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+// import { UserService } from '../user.service';
+import { Router } from '@angular/router';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { ToastrService } from 'ngx-toastr';
 import { map } from 'rxjs/operators';
 import { DeleteModalComponent } from '../../../shared/components/delete-modal/delete-modal.component';
-// import { UserService } from '../user.service';
 
 @Component({
   selector: 'app-list',
@@ -17,12 +18,15 @@ export class ListComponent implements OnInit {
   constructor(
     private modalService: BsModalService,
     // private userService: UserService,
-    private toast: ToastrService
+    private toast: ToastrService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {}
 
-  onAdd() {}
+  onAdd() {
+    this.router.navigate(['/user/add']);
+  }
 
   onEdit() {}
 
