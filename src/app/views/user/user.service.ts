@@ -17,11 +17,25 @@ export class UserService {
     return this.userRef.update(key, data);
   }
 
+  // for login sake
   getSelectedUser(key: string) {
     return this.db.database
       .ref(this.dbPath)
       .child(key)
       .once('value');
+  }
+
+  selectedUserByUID(uid: string) {
+    return this.db.database
+      .ref(this.dbPath)
+      .orderByChild('uid')
+      .equalTo(uid)
+      .once('value');
+  }
+
+  editUser(data: any) {
+    const userKey = data.email.replace('.', '_dot_');
+    return this.userRef.update(userKey, data);
   }
 
   getUsers() {

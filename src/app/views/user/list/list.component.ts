@@ -34,6 +34,7 @@ export class ListComponent implements OnInit {
             return {
               id: index + 1,
               key: c.key,
+              uid: c.payload.val().uid,
               name: c.payload.val().name,
               email: c.payload.val().email,
             };
@@ -50,7 +51,9 @@ export class ListComponent implements OnInit {
     this.router.navigate(['/user/add']);
   }
 
-  onEdit() {}
+  onEdit(id: string) {
+    this.router.navigate(['/user/edit', id]);
+  }
 
   onDelete() {}
 

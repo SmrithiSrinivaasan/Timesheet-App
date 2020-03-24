@@ -23,7 +23,7 @@
         <td>{{user.name}}</td>
         <td>{{user.email}}</td>
         <td>
-          <button (click)=onEdit(user) class ='btn-primary'>Edit</button>
+          <button (click)=onEdit(user.uid) class ='btn-primary'>Edit</button>
           <button (click)=onDelete(user) class ='btn-primary'>Delete</button>
         </td>
       </tr>
