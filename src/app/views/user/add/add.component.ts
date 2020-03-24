@@ -40,7 +40,6 @@ export class AddComponent implements OnInit {
   }
 
   onSave() {
-    console.log('user details', this.userForm.value);
     const userDetail: any = {
       name: this.userForm.value.name,
       email: this.userForm.value.email,

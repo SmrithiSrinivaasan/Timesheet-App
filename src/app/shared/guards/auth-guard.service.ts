@@ -24,8 +24,6 @@ export class AuthGuardService implements CanActivate {
         route.data.roles.indexOf(authDetails.auth.role) === -1
       ) {
         // first is admin tat we gave , second is the role of the entered user
-        console.log('authDetails', authDetails);
-
         this.router.navigate(['/dashboard']);
         return false;
       }

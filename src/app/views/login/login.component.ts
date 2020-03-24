@@ -58,7 +58,6 @@ export class LoginComponent implements OnInit {
             .then((snapshot: any) => {
               const val = snapshot.val();
               if (val) {
-                console.log('val is', val);
                 authDetails.role = val.role;
                 authDetails.name = val.name;
               } else {
