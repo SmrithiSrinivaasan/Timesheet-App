@@ -62,6 +62,7 @@ export class AddComponent implements OnInit {
             this.toast.error(dbError.message);
           });
       })
+
       .catch((authError: any) => {
         this.toast.error(authError.message); // says email already exists if used again
       });

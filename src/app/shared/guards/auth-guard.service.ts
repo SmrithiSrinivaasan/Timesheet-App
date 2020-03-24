@@ -17,11 +17,6 @@ export class AuthGuardService implements CanActivate {
     const authDetails = JSON.parse(localStorage.getItem('auth'));
     const isUserLoggedIn = authDetails && authDetails.auth.isLoggedIn;
 
-    // if (!isUserLoggedIn) {
-    //   this.router.navigate(['/login']);
-    //   return false;
-    // }
-    // return true;
     if (isUserLoggedIn) {
       // both admin n user
       if (

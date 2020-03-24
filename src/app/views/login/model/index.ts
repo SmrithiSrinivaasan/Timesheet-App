@@ -11,3 +11,5 @@ export interface IAuthDetails {
 export interface IAuthState {
   auth: IAuthDetails;
 }
+
+// it is global so that it can be accessed by all files, like service action ets
