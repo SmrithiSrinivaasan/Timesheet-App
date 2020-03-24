@@ -19,7 +19,14 @@ export class AuthenticationService {
     );
   }
 
-  // /* Sign out */
+  SignUp(email: string, password: string) {
+    return this.angularFireAuth.auth.createUserWithEmailAndPassword(
+      email,
+      password
+    );
+  }
+
+  // /* Sign out *
   // SignOut() {
   //   this.angularFireAuth.auth.signOut();
   // }

@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { AuthGuardService } from '../../shared/guards/auth-guard.service';
 import { ListComponent } from './list/list.component';
 
 const routes: Routes = [
@@ -8,7 +9,9 @@ const routes: Routes = [
     component: ListComponent,
     data: {
       title: 'Phases',
+      roles: ['admin'],
     },
+    canActivate: [AuthGuardService],
   },
 ];
 

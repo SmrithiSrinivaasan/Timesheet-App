@@ -17,10 +17,19 @@ export class AuthGuardService implements CanActivate {
     const authDetails = JSON.parse(localStorage.getItem('auth'));
     const isUserLoggedIn = authDetails && authDetails.auth.isLoggedIn;
 
-    if (!isUserLoggedIn) {
-      this.router.navigate(['/login']);
-      return false;
+    if (isUserLoggedIn) {
+      // both admin n user
+      if (
+        route.data.roles &&
+        route.data.roles.indexOf(authDetails.auth.role) === -1
+      ) {
+        // first is admin tat we gave , second is the role of the entered user
+        this.router.navigate(['/dashboard']);
+        return false;
+      }
+      return true;
     }
-    return true;
+    this.router.navigate(['/login']);
+    return false;
   }
 }

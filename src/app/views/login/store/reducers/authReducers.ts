@@ -9,6 +9,7 @@ const initialState: IAuthState = {
     uid: '',
     name: '',
     email: '',
+    role: '',
     isLoggedIn: false,
     // initial value
   },
