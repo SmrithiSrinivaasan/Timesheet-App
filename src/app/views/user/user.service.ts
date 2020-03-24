@@ -23,4 +23,8 @@ export class UserService {
       .child(key)
       .once('value');
   }
+
+  getUsers() {
+    return this.userRef;
+  }
 }

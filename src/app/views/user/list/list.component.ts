@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-// import { UserService } from '../user.service';
 import { Router } from '@angular/router';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { ToastrService } from 'ngx-toastr';
 import { map } from 'rxjs/operators';
-import { DeleteModalComponent } from '../../../shared/components/delete-modal/delete-modal.component';
+import { UserService } from '../user.service';
 
 @Component({
   selector: 'app-list',
@@ -17,12 +16,35 @@ export class ListComponent implements OnInit {
 
   constructor(
     private modalService: BsModalService,
-    // private userService: UserService,
+    private userService: UserService,
     private toast: ToastrService,
     private router: Router
   ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.isPageLoading = true;
+    // snapshotChanges is used to update changes without refreshing
+    // pipe combines multiple functions
+    this.userService
+      .getUsers()
+      .snapshotChanges()
+      .pipe(
+        map(changes =>
+          changes.map((c: any, index: number) => {
+            return {
+              id: index + 1,
+              key: c.key,
+              name: c.payload.val().name,
+              email: c.payload.val().email,
+            };
+          })
+        )
+      )
+      .subscribe(datas => {
+        this.users = datas;
+        this.isPageLoading = false;
+      });
+  }
 
   onAdd() {
     this.router.navigate(['/user/add']);
