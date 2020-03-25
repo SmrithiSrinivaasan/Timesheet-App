@@ -1,0 +1,39 @@
+<div class='card animated fadeIn'>
+  <div *ngIf="!isPageLoading && !hasEntries()" class="card-body">
+    No Entries Available
+  </div>
+
+  <div class="loading-indicator" *ngIf="isPageLoading">
+    <mat-spinner style="margin:0 auto;" diameter='40'></mat-spinner>
+    <h1 style="text-align: center">Loading...</h1>
+  </div>
+
+  <table *ngIf="!isPageLoading && hasEntries()" class='table table-bordered'>
+    <thead>
+      <tr>
+        <th>S.No.</th>
+        <th>Date</th>
+        <th>User</th>
+        <th>Project</th>
+        <th>Phase</th>
+        <th>Number of Hours Worked</th>
+        <th>Work From</th>
+        <th>Task Worked On</th>
+        <!-- <th>Options</th> -->
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let entry of entries, index as i">
+        <td>{{i+1}}</td>
+
+        <!-- <td>
+          <button (click)=onEdit(enrty) class ='btn-primary'>Edit</button>
+        </td> -->
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- <button (click)=onAdd() class='fab' mat-fab color='primary'>
+    <mat-icon>add</mat-icon>
+  </button> -->
+</div>
