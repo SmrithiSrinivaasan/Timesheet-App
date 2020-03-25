@@ -1,0 +1,55 @@
+<div class="container-fluid">
+  <div class="card">
+    <div class="card-header">
+      <div class="row">
+        <div class="col-3 text-left">
+          <button (click)=onBack() class="btn btn-primary">BACK</button>
+        </div>
+        <div class="col-6 text-center">
+          <h1 style="size: 100px;">EDIT USER</h1>
+        </div>
+        <div class="col-3 text-right">
+          <button [disabled]='userForm.invalid || userForm.pristine' (click)=onSave() class="btn btn-primary">UPDATE</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="loading-indicator" *ngIf="isPageLoading">
+      <mat-spinner style="margin:0 auto;" diameter='40'></mat-spinner>
+      <h1 style="text-align: center">Loading...</h1>
+    </div>
+
+    <div *ngIf='!isPageLoading && !hasData()'>
+      <h1 style="text-align: center">No Data Available</h1>
+    </div>
+
+    <div class="card-body" *ngIf="!isPageLoading && hasData()">
+      <form [formGroup]="userForm">  <!--This links the form to the defined userForm-->
+        <div class="row">
+          <div class="col-12">
+            <div class="form-group">
+              <label> User Name </label>
+              <input [class.is-invalid]='name.touched && name.invalid' type="text" class="form-control" formControlName="name" />
+              <div *ngIf="name.touched && name.invalid">
+                <small *ngIf="name.errors?.required" class='text-danger'> User Name is required</small>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-12">
+            <div class="form-group">
+              <label> User Email </label>
+              <input [class.is-invalid]='email.touched && email.invalid' type="text" class="form-control" formControlName="email" />
+              <div *ngIf="email.touched && email.invalid">
+                <small *ngIf="email.errors?.required" class='text-danger'> User Email is required</small>
+                <small *ngIf="email.errors?.email" class='text-danger'> Invalid User Email</small>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

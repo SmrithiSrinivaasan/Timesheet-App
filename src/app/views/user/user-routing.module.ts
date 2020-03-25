@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AuthGuardService } from '../../shared/guards/auth-guard.service';
 import { AddComponent } from './add/add.component';
+import { EditComponent } from './edit/edit.component';
 import { ListComponent } from './list/list.component';
 
 const routes: Routes = [
@@ -25,6 +26,13 @@ const routes: Routes = [
         component: AddComponent,
         data: {
           title: 'Add User',
+        },
+      },
+      {
+        path: 'edit/:id',
+        component: EditComponent,
+        data: {
+          title: 'Edit User',
         },
       },
     ],
