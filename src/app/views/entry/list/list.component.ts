@@ -6,7 +6,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ListComponent implements OnInit {
   isPageLoading = false;
-  entries = [];
+  entries = ['1'];
 
   constructor() {}
 
