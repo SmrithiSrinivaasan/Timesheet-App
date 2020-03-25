@@ -24,6 +24,7 @@
         <td>{{user.email}}</td>
         <td>
           <button (click)=onEdit(user.uid) class ='btn-primary'>Edit</button>
+          <!-- we use uid because the key has the email id and it shdnt be displayed in the url-->
           <button (click)=onDelete(user) class ='btn-primary'>Delete</button>
         </td>
       </tr>

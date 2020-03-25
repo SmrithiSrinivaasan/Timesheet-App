@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { ToastrService } from 'ngx-toastr';
 import { map } from 'rxjs/operators';
+import { DeleteModalComponent } from '../../../shared/components/delete-modal/delete-modal.component';
 import { UserService } from '../user.service';
 
 @Component({
@@ -55,7 +56,32 @@ export class ListComponent implements OnInit {
     this.router.navigate(['/user/edit', id]);
   }
 
-  onDelete() {}
+  onDelete(user: any) {
+    const initialState = {
+      title: 'Delete User',
+      saveButtonText: 'Delete',
+      message: 'Are you sure you want to delete this user ? ',
+    };
+    this.bsModalRef = this.modalService.show(DeleteModalComponent, {
+      initialState,
+    });
+    this.bsModalRef.content.closeBtnName = 'Close';
+
+    // communication with input-modal
+    this.bsModalRef.content.delete.subscribe((response: boolean) => {
+      if (response) {
+        this.userService.deleteUser(user.key).then(
+          () => {
+            this.toast.success('User Deleted Successfully !');
+            this.bsModalRef.hide();
+          },
+          (error: any) => {
+            this.toast.error(error.message);
+          }
+        );
+      }
+    });
+  }
 
   hasUser() {
     return this.users.length > 0;
