@@ -1,0 +1,87 @@
+<div>
+  <div *ngIf="!isPageLoading && hasEntries()" class="card">
+  <div class='card-body text-center'>
+    <div class="row">
+
+      <div class="form-group col-sm-4">
+        <label for="ccmonth">User</label>
+        <select class="form-control" id="ccmonth">
+          <option>1</option>
+        </select>
+      </div>
+
+      <div class="form-group col-sm-4">
+        <label for="ccmonth">Project</label>
+        <select class="form-control" id="ccmonth">
+          <option>1</option>
+        </select>
+      </div>
+
+      <div class="form-group col-sm-4">
+        <label for="ccmonth">Phase</label>
+        <select class="form-control" id="ccmonth">
+          <option>1</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="row">
+
+      <div class="form-group col-sm-6">
+        <label for="ccmonth">From Date </label>
+        <input class="form-control" id="date-input" name="date-input" placeholder="date" type="date">
+      </div>
+
+      <div class="form-group col-sm-6">
+        <label for="ccmonth">To Date </label>
+        <input class="form-control" id="date-input" name="date-input" placeholder="date" type="date">
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<div *ngIf="!isPageLoading && hasEntries()" class="card">
+  <div class="card-body">
+    <table class='table table-bordered'>
+      <thead>
+        <tr>
+          <th>S.No.</th>
+          <th>Date</th>
+          <th>User</th>
+          <th>Work From</th>
+          <th>Project</th>
+          <th>Phase</th>
+          <th>Task Worked On</th>
+          <th>Total Hours</th>
+          <!-- <th>Options</th> -->
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let entry of entries, index as i">
+          <td>{{i+1}}</td>
+          <!-- <td>
+            <button (click)=onEdit(enrty) class ='btn-primary'>Edit</button>
+          </td> -->
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div *ngIf="!isPageLoading && !hasEntries()" class="card">
+  <div class="card-body text-center">
+    No Entries Available
+  </div>
+</div>
+
+<div *ngIf="isPageLoading" class="card">
+  <div class="loading-indicator">
+    <mat-spinner style="margin:0 auto;" diameter='40'></mat-spinner>
+    <h1 style="text-align: center">Loading...</h1>
+  </div>
+</div>
+<button (click)=onAdd() class='fab' mat-fab color='primary'>
+    <mat-icon>add</mat-icon>
+</button>
+</div>

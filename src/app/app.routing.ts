@@ -45,6 +45,16 @@ export const routes: Routes = [
         loadChildren: () =>
           import('./views/phase/phase.module').then(m => m.PhaseModule),
       },
+      {
+        path: 'user',
+        loadChildren: () =>
+          import('./views/user/user.module').then(m => m.UserModule),
+      },
+      {
+        path: 'entry',
+        loadChildren: () =>
+          import('./views/entry/entry.module').then(m => m.EntryModule),
+      },
     ],
   },
 ];

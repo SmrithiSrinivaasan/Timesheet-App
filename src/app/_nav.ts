@@ -4,16 +4,26 @@ export const navItems: INavData[] = [
   {
     name: 'Dashboard',
     url: '/dashboard',
-    icon: 'icon-speedometer',
+    icon: 'cui-dashboard',
   },
   {
-    name: 'Project',
+    name: 'Projects',
     url: '/project',
-    icon: 'icon-speedometer',
+    icon: 'icon-layers',
   },
   {
-    name: 'Phase',
+    name: 'Phases',
     url: '/phase',
-    icon: 'icon-speedometer',
+    icon: 'fa-clipboard',
+  },
+  {
+    name: 'Users',
+    url: '/user',
+    icon: 'icon-people',
+  },
+  {
+    name: 'Entries',
+    url: '/entry',
+    icon: 'icon-note',
   },
 ];

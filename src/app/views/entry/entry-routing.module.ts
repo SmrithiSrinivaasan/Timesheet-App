@@ -8,10 +8,9 @@ const routes: Routes = [
     path: '',
     component: ListComponent,
     data: {
-      title: 'Phases',
-      roles: ['admin'],
+      title: 'Entries',
+      // roles: ['admin'],
     },
-    canActivate: [AuthGuardService],
   },
 ];
 
@@ -19,4 +18,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class PhaseRoutingModule {}
+export class EntryRoutingModule {}
