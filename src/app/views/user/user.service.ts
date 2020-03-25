@@ -38,6 +38,10 @@ export class UserService {
     return this.userRef.update(userKey, data);
   }
 
+  deleteUser(key: string) {
+    return this.userRef.remove(key);
+  }
+
   getUsers() {
     return this.userRef;
   }
