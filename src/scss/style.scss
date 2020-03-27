@@ -1,5 +1,6 @@
 // If you want to override variables do it here
 @import "variables";
+@import "~@ng-select/ng-select/themes/default.theme.css";
 
 // Import styles
 @import "~@coreui/coreui/scss/coreui";
@@ -13,4 +14,12 @@
   right: 25px;
   float: right;
   outline: none !important;
+}
+
+.ng-select.ng-invalid.ng-touched .ng-select-container {
+  border-color: #dc3545;
+}
+
+.ng-select.ng-invalid.ng-touched .ng-arrow-wrapper .ng-arrow{
+  border-color: #dc3545 transparent transparent
 }
