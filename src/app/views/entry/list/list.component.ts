@@ -68,7 +68,6 @@ export class ListComponent implements OnInit {
       )
       .subscribe(datas => {
         this.phases = datas;
-        this.isPageLoading = false;
       });
   }
 
