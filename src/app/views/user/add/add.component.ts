@@ -2,9 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { error } from 'protractor';
+import { environment } from '../../../../environments/environment';
 import { AuthenticationService } from '../../../services/authentication.service';
-import { SharedModule } from '../../../shared/shared/shared.module';
 import { UserService } from '../user.service';
 
 @Component({
@@ -43,7 +42,7 @@ export class AddComponent implements OnInit {
     const userDetail: any = {
       name: this.userForm.value.name,
       email: this.userForm.value.email,
-      role: 'User',
+      role: environment.Role.User,
     };
     const password = '123456';
 

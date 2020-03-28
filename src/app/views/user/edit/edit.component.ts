@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { select, Store } from '@ngrx/store';
-import { User } from 'firebase';
 import { ToastrService } from 'ngx-toastr';
 import { UserService } from '../user.service';
 

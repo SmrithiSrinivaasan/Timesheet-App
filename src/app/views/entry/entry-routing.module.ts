@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { environment } from '../../../environments/environment';
 import { AuthGuardService } from '../../shared/guards/auth-guard.service';
 import { AddComponent } from './add/add.component';
 import { ListComponent } from './list/list.component';
@@ -9,24 +10,27 @@ const routes: Routes = [
     path: '',
     data: {
       title: 'Entries',
-      // roles: ['admin'],
+      roles: [environment.Role.Admin, environment.Role.User],
     },
+    canActivate: [AuthGuardService],
     children: [
       {
         path: '',
         component: ListComponent,
         data: {
           title: 'Entry List',
-          // roles: ['admin'],
+          roles: [environment.Role.Admin, environment.Role.User],
         },
+        canActivate: [AuthGuardService],
       },
       {
         path: 'add',
         component: AddComponent,
         data: {
           title: 'Add Entry',
-          // roles: ['user'],
+          roles: [environment.Role.User],
         },
+        canActivate: [AuthGuardService],
       },
     ],
   },

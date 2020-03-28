@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { map } from 'rxjs/internal/operators/map';
+import { environment } from '../../../../environments/environment';
 import { PhaseService } from '../../phase/phase.service';
 import { ProjectService } from '../../project/project.service';
 import { UserService } from '../../user/user.service';
@@ -71,6 +72,12 @@ export class ListComponent implements OnInit {
       .subscribe(datas => {
         this.phases = datas;
       });
+  }
+
+  isAdmin() {
+    const authDetails = JSON.parse(localStorage.getItem('auth'));
+    const role = authDetails && authDetails.auth && authDetails.auth.role;
+    return role === environment.Role.Admin;
   }
 
   hasEntries() {
