@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { map } from 'rxjs/internal/operators/map';
 import { PhaseService } from '../../phase/phase.service';
 import { ProjectService } from '../../project/project.service';
@@ -18,7 +19,8 @@ export class ListComponent implements OnInit {
   constructor(
     private userService: UserService,
     private projectService: ProjectService,
-    private phaseService: PhaseService
+    private phaseService: PhaseService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -75,7 +77,9 @@ export class ListComponent implements OnInit {
     return this.entries.length > 0;
   }
 
-  onAdd() {}
+  onAdd() {
+    this.router.navigate(['/entry/add']);
+  }
 
   onEdit() {}
 }
