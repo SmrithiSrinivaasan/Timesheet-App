@@ -64,13 +64,13 @@
       <tbody>
         <tr *ngFor="let entry of entries, index as i">
           <td>{{i+1}}</td>
-          <td> </td>
-          <td *ngIf="isAdmin()"> </td>
-          <td> </td>
-          <td> </td>
-          <td> </td>
-          <td> </td>
-          <td> </td>
+          <td>{{entry.date}} </td>
+          <td *ngIf="isAdmin()">{{entry.name}}</td>
+          <td>{{entry.workFrom}}</td>
+          <td>{{entry.project}}</td>
+          <td>{{entry.phase}}</td>
+          <td>{{entry.task}}</td>
+          <td>{{entry.seconds}}</td>
           <td *ngIf="!isAdmin()">
             <button (click)=onEdit() class ='btn-primary'>Edit</button>
           </td>

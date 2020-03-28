@@ -15,4 +15,8 @@ export class EntryService {
   addEntry(data: any) {
     return this.entryRef.push(data);
   }
+
+  getEntries() {
+    return this.entryRef;
+  }
 }
