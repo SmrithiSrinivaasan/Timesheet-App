@@ -87,8 +87,6 @@ export class ListComponent implements OnInit {
       .pipe(
         map(changes =>
           changes.map((c: any, index: number) => {
-            console.log('c', c);
-            console.log('c.payload.val', c.payload.val());
             const date = new Date(null);
             date.setSeconds(parseInt(c.payload.val().seconds, 10));
             const totalHours = date.toISOString().substr(11, 5);
