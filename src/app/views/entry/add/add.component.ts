@@ -1,9 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import * as moment from 'moment';
+import { ToastrService } from 'ngx-toastr';
 import { map } from 'rxjs/internal/operators/map';
 import { PhaseService } from '../../phase/phase.service';
 import { ProjectService } from '../../project/project.service';
+import { EntryService } from '../entry.service';
 
 @Component({
   selector: 'app-add',
@@ -31,7 +34,9 @@ export class AddComponent implements OnInit {
     private projectService: ProjectService,
     private phaseService: PhaseService,
     private formBuilder: FormBuilder,
-    private router: Router
+    private router: Router,
+    private entryService: EntryService,
+    private toast: ToastrService
   ) {}
 
   ngOnInit(): void {
@@ -120,7 +125,36 @@ export class AddComponent implements OnInit {
     }
   }
 
-  onSave() {}
+  onSave() {
+    const authDetails = JSON.parse(localStorage.getItem('auth'));
+    const user = authDetails && authDetails.auth;
+    const entries = this.entryForm.value;
+    const data = {
+      name: user.name,
+      uid: user.uid,
+      date: moment
+        .utc()
+        .local()
+        .format('YYYY-MM-DDTHH:mm:ss.SSS'),
+      workFrom: entries.workFrom,
+      seconds: moment
+        .duration(entries.hours)
+        .asSeconds()
+        .toString(),
+      project: entries.project,
+      phase: entries.phase,
+      task: entries.task,
+    };
+    this.entryService
+      .addEntry(data)
+      .then(() => {
+        this.toast.success('Entry Created Successfully');
+        this.router.navigate(['entry']);
+      })
+      .catch((dbError: any) => {
+        this.toast.error(dbError.message);
+      });
+  }
 
   onBack() {
     this.router.navigate(['/entry']);
