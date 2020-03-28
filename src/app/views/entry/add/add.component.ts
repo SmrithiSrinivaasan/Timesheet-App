@@ -20,6 +20,12 @@ export class AddComponent implements OnInit {
     phase: [null, [Validators.required]],
     task: ['', [Validators.required]],
   });
+  workTypes = [
+    { key: 'Office', value: 'Office' },
+    { key: 'Home', value: 'Home' },
+    { key: 'Leave', value: 'Leave' },
+  ];
+  selectedworkType = this.workTypes[0].key;
 
   constructor(
     private projectService: ProjectService,
@@ -80,6 +86,38 @@ export class AddComponent implements OnInit {
 
   get task() {
     return this.entryForm.get('task');
+  }
+
+  onWorkTypeChange() {
+    const formValue = this.entryForm.value;
+
+    if (this.selectedworkType === 'Leave') {
+      this.entryForm.patchValue({
+        hours: '00:00',
+        project: 'leave',
+        phase: 'leave',
+        task: 'leave',
+      });
+    } else {
+      this.entryForm.patchValue({
+        hours:
+          formValue.workFrom !== 'Leave' && formValue.project === 'leave'
+            ? ''
+            : formValue.hours,
+        project:
+          formValue.workFrom !== 'Leave' && formValue.project === 'leave'
+            ? ''
+            : formValue.project,
+        phase:
+          formValue.workFrom !== 'Leave' && formValue.project === 'leave'
+            ? ''
+            : formValue.phase,
+        task:
+          formValue.workFrom !== 'Leave' && formValue.project === 'leave'
+            ? ''
+            : formValue.task,
+      });
+    }
   }
 
   onSave() {}
