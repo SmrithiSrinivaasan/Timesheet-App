@@ -4,6 +4,7 @@ import { ToastrService } from 'ngx-toastr';
 import { map } from 'rxjs/operators';
 import { DeleteModalComponent } from '../../../shared/components/delete-modal/delete-modal.component';
 import { InputModalComponent } from '../../../shared/components/input-modal/input-modal.component';
+import { DashboardService } from '../../dashboard/dashboard.service';
 import { ProjectService } from '../project.service';
 
 @Component({
@@ -18,7 +19,8 @@ export class ListComponent implements OnInit {
   constructor(
     private modalService: BsModalService,
     private projectService: ProjectService,
-    private toast: ToastrService
+    private toast: ToastrService,
+    private dashboardService: DashboardService
   ) {}
 
   ngOnInit(): void {
@@ -62,6 +64,7 @@ export class ListComponent implements OnInit {
     this.bsModalRef.content.save.subscribe((data: string) => {
       this.projectService.addProject(data).then(
         (response: any) => {
+          this.dashboardService.addDashboardCount('projects');
           this.toast.success('Project Added Successfully !');
           this.bsModalRef.hide();
         },
@@ -115,6 +118,7 @@ export class ListComponent implements OnInit {
       if (response) {
         this.projectService.deleteProject(project.key).then(
           () => {
+            this.dashboardService.removeDashboardCount('projects');
             this.toast.success('Project Deleted Successfully !');
             this.bsModalRef.hide();
           },

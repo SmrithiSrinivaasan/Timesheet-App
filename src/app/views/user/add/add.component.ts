@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { environment } from '../../../../environments/environment';
 import { AuthenticationService } from '../../../services/authentication.service';
+import { DashboardService } from '../../dashboard/dashboard.service';
 import { UserService } from '../user.service';
 
 @Component({
@@ -21,7 +22,8 @@ export class AddComponent implements OnInit {
     private router: Router,
     private authenticationService: AuthenticationService,
     private userService: UserService,
-    private toast: ToastrService
+    private toast: ToastrService,
+    private dashboardService: DashboardService
   ) {}
 
   ngOnInit(): void {}
@@ -53,6 +55,7 @@ export class AddComponent implements OnInit {
         this.userService
           .addUser(userDetail)
           .then((userResponse: any) => {
+            this.dashboardService.addDashboardCount('users');
             this.toast.success('User Created Successfully');
             this.router.navigate(['user']);
           })

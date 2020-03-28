@@ -13,10 +13,25 @@ export class DashboardService {
     this.dashboardRef = db.list(this.dbPath);
   }
 
-  // getDashboardCount() {
-  //   this.dashboardRef.valueChanges();
-  // }
-  // addDashboardCount(id, childName) {
-  //   this.dashboardRef.
-  // }
+  addDashboardCount(name: string) {
+    const currentCount = this.db.database.ref(this.dbPath);
+    currentCount.ref.once('value').then(snapshot => {
+      const obj = snapshot.val();
+      currentCount.update({
+        [name]: obj && obj[name] ? obj[name] + 1 : 1,
+        // obj checks dashboard & obj[name] check for name oda count
+      });
+    });
+  }
+
+  removeDashboardCount(name: string) {
+    const currentCount = this.db.database.ref(this.dbPath);
+    currentCount.ref.once('value').then(snapshot => {
+      const obj = snapshot.val();
+      currentCount.update({
+        [name]: obj && obj[name] ? obj[name] - 1 : 0,
+        // obj checks dashboard & obj[name] check for name oda count
+      });
+    });
+  }
 }
