@@ -3,6 +3,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { ToastrService } from 'ngx-toastr';
+import { environment } from '../../../environments/environment';
 import { AuthenticationService } from '../../services/authentication.service';
 import { UserService } from '../user/user.service';
 import { IAuthDetails } from './model';
@@ -61,8 +62,8 @@ export class LoginComponent implements OnInit {
                 authDetails.role = val.role;
                 authDetails.name = val.name;
               } else {
-                authDetails.role = 'admin';
-                authDetails.name = 'admin';
+                authDetails.role = environment.Role.Admin;
+                authDetails.name = environment.Role.Admin;
               }
               this.submitted = false;
               this.store.dispatch(new updateAuthAction.UpdateAuth(authDetails));

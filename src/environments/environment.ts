@@ -15,4 +15,8 @@ export const environment = {
     appId: '1:27911365185:web:c80139f19687d643cfdcc0',
     measurementId: 'G-WQRGKCW766',
   },
+  Role: {
+    Admin: 'Admin',
+    User: 'User',
+  },
 };
