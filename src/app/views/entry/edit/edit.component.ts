@@ -84,9 +84,9 @@ export class EditComponent implements OnInit {
     this.entryService
       .selectedEntryByKey(this.key)
       .then((response: any) => {
-        console.log(response.val());
         this.entryDetail = Object.values(response.val())[0];
-        // object.val
+        // object.values takes only the details without the key from reponse.val()
+        // an array is created and the 0th element of the array is the object with the values.
         const date = new Date(null);
         date.setSeconds(parseInt(this.entryDetail.seconds, 10));
         const totalHours = date.toISOString().substr(11, 5);
