@@ -1,0 +1,111 @@
+<div class="container-fluid">
+  <div class="card">
+    <div class="card-header">
+      <div class="row">
+        <div class="col-3 text-left">
+          <button (click)="onBack()" class="btn btn-primary">BACK</button>
+        </div>
+        <div class="col-6 text-center">
+          <h1 style="size: 100px;">EDIT ENTRY</h1>
+        </div>
+        <div class="col-3 text-right">
+          <button
+            [disabled]="entryForm.invalid"
+            (click)="onSave()"
+            class="btn btn-primary"
+          >
+            UPDATE
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="card-body">
+      <form [formGroup]="entryForm">
+        <!-- This links the form to the defined entryForm-->
+        <div class="row">
+          <div class="col-lg-6 col-sm-12">
+            <div class="form-group">
+              <label>Work From *</label>
+                <ng-select (change)='onWorkTypeChange()' [items]="workTypes" formControlName="workFrom" bindLabel='key' autofocus bindValue="value" [(ngModel)]="selectedworkType">
+                </ng-select>
+              <div *ngIf="workFrom.invalid && workFrom.touched">
+                <small *ngIf="workFrom.errors?.required" class="text-danger">Work From is required</small>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-6 col-sm-12" >
+            <div class="form-group">
+              <label>Hours Worked *</label>
+              <input
+                type="time"
+                [class.is-invalid]="hours.touched && hours.invalid"
+                class="form-control"
+                formControlName= "hours"
+                value="00:00"
+              />
+              <div *ngIf="hours.invalid && hours.touched">
+                <small *ngIf="hours.errors?.required" class="text-danger">Hours Worked is required</small>
+              </div>
+            </div>
+          </div>
+        </div>
+        <br />
+
+        <div class="row">
+          <div class="col-lg-6 col-sm-12">
+            <div class="form-group">
+              <label>Project *</label>
+              <ng-select
+                [selectOnTab]="true"
+                [clearable]="false"
+                bindLabel="project"
+                placeholder="Select Project"
+                formControlName="project"
+              >
+                <ng-option [value]="project.name" *ngFor="let project of projects">
+                  {{ project.name }}
+                </ng-option>
+              </ng-select>
+              <div *ngIf="project.invalid && project.touched">
+                <small *ngIf="project.errors?.required" class="text-danger">Project is required</small>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-6 col-sm-12">
+            <div class="form-group">
+              <label>Phase *</label>
+              <ng-select
+                [selectOnTab]="true"
+                [clearable]="false"
+                bindLabel="phase"
+                placeholder="Select Phase"
+                formControlName="phase"
+              >
+                <ng-option [value]="phase.name" *ngFor="let phase of phases">
+                  {{ phase.name }}
+                </ng-option>
+              </ng-select>
+              <div *ngIf="phase.invalid && phase.touched">
+                <small *ngIf="phase.errors?.required" class="text-danger">Phase is required</small>
+              </div>
+            </div>
+          </div>
+        </div>
+        <br />
+
+        <div class="row">
+          <div class="col-lg-12 col-sm-12">
+            <label>Task Worked On *</label>
+            <textarea [class.is-invalid]="task.touched && task.invalid" class="form-control" formControlName="task"></textarea>
+            <div *ngIf="task.invalid && task.touched">
+              <small *ngIf="task.errors?.required" class="text-danger">Task Worked On is required</small>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

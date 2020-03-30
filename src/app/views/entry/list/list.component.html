@@ -72,7 +72,7 @@
           <td>{{entry.task}}</td>
           <td>{{entry.seconds}}</td>
           <td *ngIf="!isAdmin()">
-            <button (click)=onEdit() class ='btn-primary'>Edit</button>
+            <button (click)=onEdit(entry.key) class ='btn-primary'>Edit</button>
           </td>
         </tr>
       </tbody>
