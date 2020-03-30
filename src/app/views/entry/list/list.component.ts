@@ -130,5 +130,7 @@ export class ListComponent implements OnInit {
     this.router.navigate(['/entry/add']);
   }
 
-  onEdit() {}
+  onEdit(key: string) {
+    this.router.navigate(['/entry/edit', key]);
+  }
 }

@@ -16,7 +16,19 @@ export class EntryService {
     return this.entryRef.push(data);
   }
 
+  editEntry(key: string, data: any) {
+    return this.entryRef.update(key, data);
+  }
+
   getEntries() {
     return this.entryRef;
+  }
+
+  selectedEntryByKey(key: string) {
+    return this.db.database
+      .ref(this.dbPath)
+      .orderByKey()
+      .equalTo(key)
+      .once('value');
   }
 }
