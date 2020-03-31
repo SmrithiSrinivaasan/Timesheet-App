@@ -1,31 +1,55 @@
 <div>
 
-<div *ngIf="!isPageLoading && hasEntries()" class="card">
+<div *ngIf="!isPageLoading" class="card">
   <div class='card-body text-center'>
     <div class="row">
 
       <div *ngIf="isAdmin()" [ngClass]="isAdmin() ? 'form-group col-sm-4':'form-group col-sm-6'">
         <label>User</label>
-        <select class="form-control" id="user">
-          <option hidden> Select User </option>
-          <option *ngFor="let user of users" [value]=user.name> {{user.name}} </option>
-        </select>
+        <ng-select
+                [selectOnTab]="true"
+                [clearable]="false"
+                bindLabel="user"
+                placeholder="Select User"
+                (change)= "updateFilter()"
+                [(ngModel)]= "selectedUser"
+              >
+                <ng-option [value]="user.value" *ngFor="let user of users">
+                  {{ user.label }}
+                </ng-option>
+              </ng-select>
       </div>
 
       <div [ngClass]="isAdmin() ? 'form-group col-sm-4':'form-group col-sm-6'">
         <label>Project</label>
-        <select class="form-control" id="project">
-          <option hidden> Select Project </option>
-          <option *ngFor="let project of projects" [value]=project.name> {{project.name}} </option>
-        </select>
+        <ng-select
+                [selectOnTab]="true"
+                [clearable]="false"
+                bindLabel="project"
+                placeholder="Select Project"
+                (change)= "updateFilter()"
+                [(ngModel)]= "selectedProject"
+              >
+                <ng-option [value]="project.value" *ngFor="let project of projects">
+                  {{ project.label }}
+                </ng-option>
+              </ng-select>
       </div>
 
       <div [ngClass]="isAdmin() ? 'form-group col-sm-4':'form-group col-sm-6'">
         <label>Phase</label>
-        <select class="form-control" id="phase">
-          <option hidden> Select Phase </option>
-          <option *ngFor="let phase of phases" [value]=phase.name> {{phase.name}} </option>
-        </select>
+        <ng-select
+                [selectOnTab]="true"
+                [clearable]="false"
+                bindLabel="phase"
+                placeholder="Select Phase"
+                (change)= "updateFilter()"
+                [(ngModel)]= "selectedPhase"
+              >
+                <ng-option [value]="phase.value" *ngFor="let phase of phases">
+                  {{ phase.label }}
+                </ng-option>
+              </ng-select>
       </div>
     </div>
 
@@ -33,12 +57,20 @@
 
       <div class="form-group col-sm-6">
         <label>From Date </label>
-        <input class="form-control" id="date-input" name="date-input" placeholder="date" type="date">
+        <input class="form-control" id="date-input"
+        name="date-input" placeholder="date"
+        type="date" max = {{maxDate}}
+        [(ngModel)]= "selectedFromDate"
+        (change)='updateDate()' >
       </div>
 
       <div class="form-group col-sm-6">
         <label>To Date </label>
-        <input class="form-control" id="date-input" name="date-input" placeholder="date" type="date">
+        <input class="form-control" id="date-input"
+        name="date-input" placeholder="date"
+        type="date" max= {{maxDate}} min= {{selectedFromDate}}
+        [(ngModel)]= "selectedToDate"
+        (change)='updateDate()' >
       </div>
 
     </div>
@@ -64,7 +96,7 @@
       <tbody>
         <tr *ngFor="let entry of entries, index as i">
           <td>{{i+1}}</td>
-          <td>{{entry.date}} </td>
+          <td>{{entry.date | date: "dd-MM-yyyy"}} </td>
           <td *ngIf="isAdmin()">{{entry.name}}</td>
           <td>{{entry.workFrom}}</td>
           <td>{{entry.project}}</td>
