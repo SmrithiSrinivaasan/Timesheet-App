@@ -56,6 +56,7 @@ export class AddComponent implements OnInit {
           .addUser(userDetail)
           .then((userResponse: any) => {
             this.dashboardService.addDashboardCount('users');
+            this.userForm.reset();
             this.toast.success('User Created Successfully');
             this.router.navigate(['user']);
           })
@@ -67,5 +68,12 @@ export class AddComponent implements OnInit {
       .catch((authError: any) => {
         this.toast.error(authError.message); // says email already exists if used again
       });
+  }
+
+  canDeactivate() {
+    if (this.userForm.dirty) {
+      return window.confirm('Discard Changes?');
+    }
+    return true;
   }
 }

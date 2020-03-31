@@ -65,6 +65,13 @@ export class EditComponent implements OnInit {
     this.router.navigate(['user']);
   }
 
+  canDeactivate() {
+    if (this.userForm.dirty) {
+      return window.confirm('Discard Changes?');
+    }
+    return true;
+  }
+
   onSave() {
     const userDetail: any = {
       name: this.userForm.getRawValue().name,
@@ -73,6 +80,7 @@ export class EditComponent implements OnInit {
     this.userService
       .editUser(userDetail)
       .then((userResponse: any) => {
+        this.userForm.reset();
         this.toast.success('User Updated Successfully');
         this.router.navigate(['user']);
       })
