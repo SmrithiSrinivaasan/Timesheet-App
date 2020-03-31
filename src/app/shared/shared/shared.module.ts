@@ -8,9 +8,14 @@ import { NgSelectModule } from '@ng-select/ng-select';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { DeleteModalComponent } from '../components/delete-modal/delete-modal.component';
 import { InputModalComponent } from '../components/input-modal/input-modal.component';
+import { PasswordChangeComponent } from '../components/password-modal/password-change.component';
 
 @NgModule({
-  declarations: [InputModalComponent, DeleteModalComponent],
+  declarations: [
+    InputModalComponent,
+    DeleteModalComponent,
+    PasswordChangeComponent,
+  ],
   imports: [
     CommonModule,
     FormsModule,
@@ -30,6 +35,10 @@ import { InputModalComponent } from '../components/input-modal/input-modal.compo
     MatProgressSpinnerModule,
     NgSelectModule,
   ],
-  entryComponents: [InputModalComponent, DeleteModalComponent],
+  entryComponents: [
+    InputModalComponent,
+    DeleteModalComponent,
+    PasswordChangeComponent,
+  ],
 })
 export class SharedModule {}
