@@ -137,12 +137,16 @@ export class ListComponent implements OnInit, OnDestroy {
           (data: any) => data === 'all' || data === ''
         );
         if (filteredKey.fromDate && filteredKey.toDate) {
-          this.entries = filter(val.datas, data => {
+          const filteredDates = filter(val.datas, data => {
             return (
               data.date >= filteredKey.fromDate &&
               data.date <= filteredKey.toDate
             );
           });
+          const updatedFilterKey = filteredKey;
+          delete updatedFilterKey.fromDate;
+          delete updatedFilterKey.toDate;
+          this.entries = filter(filteredDates, updatedFilterKey);
         } else {
           this.entries = filter(val.datas, filteredKey);
         }
