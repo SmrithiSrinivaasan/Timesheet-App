@@ -34,6 +34,7 @@ import { AngularFireAuthModule } from '@angular/fire/auth';
 import { AngularFireDatabaseModule } from '@angular/fire/database';
 import { StoreModule } from '@ngrx/store';
 import { ToastrModule } from 'ngx-toastr';
+import { CanDeactivateGuardsService } from './shared/guards/can-deactivate-guards.service';
 import { SharedModule } from './shared/shared/shared.module';
 import * as store from './store/store';
 
@@ -65,6 +66,7 @@ import * as store from './store/store';
       provide: LocationStrategy,
       useClass: HashLocationStrategy,
     },
+    CanDeactivateGuardsService,
   ],
   bootstrap: [AppComponent],
 })

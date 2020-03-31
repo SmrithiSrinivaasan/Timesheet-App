@@ -148,6 +148,7 @@ export class AddComponent implements OnInit {
     this.entryService
       .addEntry(data)
       .then(() => {
+        this.entryForm.reset();
         this.toast.success('Entry Created Successfully');
         this.router.navigate(['entry']);
       })
@@ -158,5 +159,12 @@ export class AddComponent implements OnInit {
 
   onBack() {
     this.router.navigate(['/entry']);
+  }
+
+  canDeactivate() {
+    if (this.entryForm.dirty) {
+      return window.confirm('Discard Changes?');
+    }
+    return true;
   }
 }
