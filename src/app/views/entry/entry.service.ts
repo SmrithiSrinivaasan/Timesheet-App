@@ -41,7 +41,7 @@ export class EntryService {
             return {
               id: index + 1,
               key: c.key,
-              date: moment(c.payload.val().date).format('DD-MM-YYYY'),
+              date: moment(c.payload.val().date).format('YYYY-MM-DD'),
               name: c.payload.val().name,
               phase: c.payload.val().phase,
               project: c.payload.val().project,

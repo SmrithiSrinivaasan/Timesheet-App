@@ -1,6 +1,4 @@
 import { FetchEntries } from './fetchEntries';
-import { FilterPhase } from './filterPhase';
-import { FilterProject } from './filterProject';
-import { FilterUser } from './filterUser';
+import { UpdateFilters } from './updateFilters';
 
-export type Actions = FetchEntries | FilterProject | FilterPhase | FilterUser;
+export type Actions = FetchEntries | UpdateFilters;

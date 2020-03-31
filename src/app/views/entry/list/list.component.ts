@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { select, Store } from '@ngrx/store';
-import { filter } from 'lodash';
+import { filter, omitBy } from 'lodash';
 import * as moment from 'moment';
 import { Subscription } from 'rxjs';
 import { map } from 'rxjs/internal/operators/map';
@@ -10,9 +10,7 @@ import { PhaseService } from '../../phase/phase.service';
 import { ProjectService } from '../../project/project.service';
 import { UserService } from '../../user/user.service';
 import { EntryService } from '../entry.service';
-import * as FilterPhase from '../store/actions/filterPhase';
-import * as FilterProject from '../store/actions/filterProject';
-import * as FilterUser from '../store/actions/filterUser';
+import { UpdateFilters } from '../store/actions/updateFilters';
 
 @Component({
   selector: 'app-list',
@@ -29,6 +27,9 @@ export class ListComponent implements OnInit, OnDestroy {
   selectedPhase: string;
   selectedUser: string;
   subscription: Subscription;
+  selectedFromDate: any;
+  selectedToDate: any;
+  maxDate = moment(new Date()).format('YYYY-MM-DD');
 
   constructor(
     private userService: UserService,
@@ -57,7 +58,6 @@ export class ListComponent implements OnInit, OnDestroy {
         )
       )
       .subscribe(datas => {
-        console.log(datas);
         const user = {
           label: 'All Users',
           value: 'all',
@@ -107,40 +107,6 @@ export class ListComponent implements OnInit, OnDestroy {
 
         this.phases = [phase, ...datas];
       });
-
-    // this.entryService
-    //   .getEntries()
-    //   .snapshotChanges()
-    //   .pipe(
-    //     map(changes =>
-    //       changes.map((c: any, index: number) => {
-    //         const date = new Date('all');
-    //         date.setSeconds(parseInt(c.payload.val().seconds, 10));
-    //         const totalHours = date.toISOString().substr(11, 5);
-    //         return {
-    //           id: index + 1,
-    //           key: c.key,
-    //           date: moment(c.payload.val().date).format('DD-MM-YYYY'),
-    //           name: c.payload.val().name,
-    //           phase: c.payload.val().phase,
-    //           project: c.payload.val().project,
-    //           seconds: totalHours,
-    //           task: c.payload.val().task,
-    //           uid: c.payload.val().uid,
-    //           workFrom: c.payload.val().workFrom,
-    //         };
-    //       })
-    //     )
-    //   )
-    //   .subscribe(datas => {
-    //     // datas has all the entries from the db
-    //     if (role === environment.Role.Admin) {
-    //       this.entries = datas;
-    //     } else {
-    //       this.entries = datas.filter(data => data.uid === user.uid);
-    //     }
-    //     this.isPageLoading = false;
-    //   });
   }
 
   ngOnDestroy() {
@@ -151,25 +117,36 @@ export class ListComponent implements OnInit, OnDestroy {
     this.isPageLoading = true;
 
     this.subscription = this.store.pipe(select('entries')).subscribe(val => {
-      console.log(val);
-      this.selectedProject = val.project;
-      this.selectedPhase = val.phase;
-      this.selectedUser = val.user;
+      this.selectedProject = val.filters.project;
+      this.selectedPhase = val.filters.phase;
+      this.selectedUser = val.filters.name;
+      this.selectedFromDate = val.filters.fromDate;
+      this.selectedToDate = val.filters.toDate;
 
       if (
         this.selectedProject === 'all' &&
         this.selectedPhase === 'all' &&
-        this.selectedUser === 'all'
+        this.selectedUser === 'all' &&
+        this.selectedFromDate === '' &&
+        this.selectedToDate === ''
       ) {
         this.entries = val.datas;
       } else {
-        this.entries = filter(val.datas, {
-          project: this.selectedProject,
-          phase: this.selectedPhase,
-          user: this.selectedUser,
-        });
+        const filteredKey = omitBy(
+          val.filters,
+          (data: any) => data === 'all' || data === ''
+        );
+        if (filteredKey.fromDate && filteredKey.toDate) {
+          this.entries = filter(val.datas, data => {
+            return (
+              data.date >= filteredKey.fromDate &&
+              data.date <= filteredKey.toDate
+            );
+          });
+        } else {
+          this.entries = filter(val.datas, filteredKey);
+        }
       }
-
       this.isPageLoading = false;
     });
   }
@@ -192,21 +169,27 @@ export class ListComponent implements OnInit, OnDestroy {
     this.router.navigate(['/entry/edit', key]);
   }
 
-  onChangeProject() {
-    console.log(this.selectedProject);
-    this.store.dispatch(new FilterProject.FilterProject(this.selectedProject));
-    this.loadData();
+  updateFilter() {
+    const filteredData = {
+      project: this.selectedProject,
+      phase: this.selectedPhase,
+      name: this.selectedUser,
+      fromDate: this.selectedFromDate,
+      toDate: this.selectedToDate,
+    };
+    this.store.dispatch(new UpdateFilters(filteredData));
   }
 
-  onChangePhase() {
-    console.log(this.selectedPhase);
-    this.store.dispatch(new FilterPhase.FilterPhase(this.selectedPhase));
-    this.loadData();
-  }
-
-  onChangeUser() {
-    console.log(this.selectedUser);
-    this.store.dispatch(new FilterUser.FilterUser(this.selectedUser));
-    this.loadData();
+  updateDate() {
+    if (this.selectedFromDate && this.selectedToDate) {
+      const filteredData = {
+        project: this.selectedProject,
+        phase: this.selectedPhase,
+        name: this.selectedUser,
+        fromDate: this.selectedFromDate,
+        toDate: this.selectedToDate,
+      };
+      this.store.dispatch(new UpdateFilters(filteredData));
+    }
   }
 }

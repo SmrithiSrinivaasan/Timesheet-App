@@ -1,12 +1,17 @@
+import { syncStateUpdate } from 'ngrx-store-localstorage';
 import { Actions } from '../actions';
 import { ActionTypes } from '../actionTypes';
 // it will automatically take index, if we give other name apart from index then specify it
 
 const initialState: any = {
   datas: [],
-  project: 'all',
-  phase: 'all',
-  user: 'all',
+  filters: {
+    project: 'all',
+    phase: 'all',
+    name: 'all',
+    fromDate: '',
+    toDate: '',
+  },
 };
 
 export function entryReducer(state: any = initialState, action: Actions) {
@@ -19,22 +24,10 @@ export function entryReducer(state: any = initialState, action: Actions) {
         datas: [...action.payload],
       };
 
-    case ActionTypes.FILTER_PROJECT:
+    case ActionTypes.UPDATE_FILTER:
       return {
         ...state,
-        project: action.payload,
-      };
-
-    case ActionTypes.FILTER_PHASE:
-      return {
-        ...state,
-        phase: action.payload,
-      };
-
-    case ActionTypes.FILTER_USER:
-      return {
-        ...state,
-        user: action.payload,
+        filters: action.payload,
       };
 
     default:
