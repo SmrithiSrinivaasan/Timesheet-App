@@ -14,6 +14,8 @@ import { EntryService } from '../entry.service';
   templateUrl: './add.component.html',
 })
 export class AddComponent implements OnInit {
+  isLoading = false;
+
   projects = [];
   phases = [];
 
@@ -129,6 +131,8 @@ export class AddComponent implements OnInit {
   }
 
   onSave() {
+    this.isLoading = true;
+
     const authDetails = JSON.parse(localStorage.getItem('auth'));
     const user = authDetails && authDetails.auth;
     const entries = this.entryForm.value;
@@ -161,10 +165,12 @@ export class AddComponent implements OnInit {
         );
         this.entryForm.reset();
         this.toast.success('Entry Created Successfully');
+        this.isLoading = false;
         this.router.navigate(['entry']);
       })
       .catch((dbError: any) => {
         this.toast.error(dbError.message);
+        this.isLoading = false;
       });
   }
 

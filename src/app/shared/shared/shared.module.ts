@@ -8,6 +8,7 @@ import { NgSelectModule } from '@ng-select/ng-select';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { DeleteModalComponent } from '../components/delete-modal/delete-modal.component';
 import { InputModalComponent } from '../components/input-modal/input-modal.component';
+import { LoadingButtonComponent } from '../components/loading-button/loading-button.component';
 import { PasswordChangeComponent } from '../components/password-modal/password-change.component';
 
 @NgModule({
@@ -15,6 +16,7 @@ import { PasswordChangeComponent } from '../components/password-modal/password-c
     InputModalComponent,
     DeleteModalComponent,
     PasswordChangeComponent,
+    LoadingButtonComponent,
   ],
   imports: [
     CommonModule,
@@ -34,6 +36,7 @@ import { PasswordChangeComponent } from '../components/password-modal/password-c
     MatIconModule,
     MatProgressSpinnerModule,
     NgSelectModule,
+    LoadingButtonComponent,
   ],
   entryComponents: [
     InputModalComponent,

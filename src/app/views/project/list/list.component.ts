@@ -12,6 +12,8 @@ import { ProjectService } from '../project.service';
   templateUrl: './list.component.html',
 })
 export class ListComponent implements OnInit {
+  isLoading = false;
+
   projects = [];
   bsModalRef: BsModalRef;
   isPageLoading = false;
@@ -52,6 +54,7 @@ export class ListComponent implements OnInit {
       title: 'Add Project',
       inputLabel: 'Project Name',
       saveButtonText: 'Save',
+      loadingText: 'Saving',
       type: 'Add',
       initialValue: '',
     };
@@ -82,6 +85,7 @@ export class ListComponent implements OnInit {
       title: 'Edit Project',
       inputLabel: 'Project Name',
       saveButtonText: 'Update',
+      loadingText: 'Updating',
       type: 'Edit',
       initialValue: project.name,
     };

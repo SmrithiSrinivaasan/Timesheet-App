@@ -55,6 +55,8 @@ import * as store from './store/store';
     AngularFireDatabaseModule,
     ToastrModule.forRoot({
       progressBar: true,
+      preventDuplicates: true,
+      closeButton: true,
     }),
     StoreModule.forRoot(store.reducers, { metaReducers: store.metaReducers }),
     SharedModule,

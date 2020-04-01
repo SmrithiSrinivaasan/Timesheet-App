@@ -12,6 +12,8 @@ import { UserService } from '../user.service';
   templateUrl: './add.component.html',
 })
 export class AddComponent implements OnInit {
+  isLoading = false;
+
   userForm = this.formBuilder.group({
     name: ['', [Validators.required]],
     email: ['', [Validators.required, Validators.email]],
@@ -41,6 +43,7 @@ export class AddComponent implements OnInit {
   }
 
   onSave() {
+    this.isLoading = true;
     const userDetail: any = {
       name: this.userForm.value.name,
       email: this.userForm.value.email,
@@ -58,15 +61,18 @@ export class AddComponent implements OnInit {
             this.dashboardService.addDashboardCount('users');
             this.userForm.reset();
             this.toast.success('User Created Successfully');
+            this.isLoading = false;
             this.router.navigate(['user']);
           })
           .catch((dbError: any) => {
             this.toast.error(dbError.message);
+            this.isLoading = false;
           });
       })
 
       .catch((authError: any) => {
         this.toast.error(authError.message); // says email already exists if used again
+        this.isLoading = false;
       });
   }
 

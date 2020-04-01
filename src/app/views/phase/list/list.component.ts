@@ -11,6 +11,8 @@ import { PhaseService } from '../phase.service';
   templateUrl: './list.component.html',
 })
 export class ListComponent implements OnInit {
+  isLoading = false;
+
   phases = [];
   bsModalRef: BsModalRef;
   isPageLoading = false;
@@ -50,6 +52,7 @@ export class ListComponent implements OnInit {
       title: 'Add Phase',
       inputLabel: 'Phase Name',
       saveButtonText: 'Save',
+      loadingText: 'Saving',
       type: 'Add',
       initialValue: '',
     };
@@ -77,6 +80,7 @@ export class ListComponent implements OnInit {
       title: 'Edit Phase',
       inputLabel: 'Phase Name',
       saveButtonText: 'Update',
+      loadingText: 'Updating',
       type: 'Edit',
       initialValue: phase.name,
     };

@@ -28,6 +28,7 @@ export class EditComponent implements OnInit {
   key: string;
   entryDetail: any;
   isPageLoading = false;
+  isLoading = false;
 
   workTypes = [
     { key: 'Office', value: 'Office' },
@@ -166,6 +167,8 @@ export class EditComponent implements OnInit {
   }
 
   onSave() {
+    this.isLoading = true;
+
     const authDetails = JSON.parse(localStorage.getItem('auth'));
     const user = authDetails && authDetails.auth;
     const entries = this.entryForm.value;
@@ -205,10 +208,12 @@ export class EditComponent implements OnInit {
         );
         this.entryForm.reset();
         this.toast.success('Entry Updated Successfully');
+        this.isLoading = false;
         this.router.navigate(['entry']);
       })
       .catch((dbError: any) => {
         this.toast.error(dbError.message);
+        this.isLoading = false;
       });
   }
 
