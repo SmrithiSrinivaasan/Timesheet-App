@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 
 // Import Containers
 import { DefaultLayoutComponent } from './containers';
+import { PasswordChangeComponent } from './shared/components/password-modal/password-change.component';
 import { AuthGuardService } from './shared/guards/auth-guard.service';
 import { LoginComponent } from './views/login/login.component';
 
