@@ -12,8 +12,6 @@ import { ProjectService } from '../project.service';
   templateUrl: './list.component.html',
 })
 export class ListComponent implements OnInit {
-  isLoading = false;
-
   projects = [];
   bsModalRef: BsModalRef;
   isPageLoading = false;
