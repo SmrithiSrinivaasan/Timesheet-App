@@ -19,7 +19,15 @@ export class PasswordChangeComponent implements OnInit {
     private formBuilder: FormBuilder,
     private authenticationService: AuthenticationService,
     private toast: ToastrService
-  ) {}
+  ) {
+    this.pwdForm.valueChanges.subscribe(field => {
+      if (field.newPwd !== field.confirmPwd) {
+        this.confirmPwd.setErrors({ mismatch: true });
+      } else {
+        this.confirmPwd.setErrors(null);
+      }
+    });
+  }
 
   ngOnInit(): void {}
 
