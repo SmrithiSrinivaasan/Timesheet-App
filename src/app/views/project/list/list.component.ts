@@ -52,6 +52,7 @@ export class ListComponent implements OnInit {
       title: 'Add Project',
       inputLabel: 'Project Name',
       saveButtonText: 'Save',
+      loadingText: 'Saving',
       type: 'Add',
       initialValue: '',
     };
@@ -82,6 +83,7 @@ export class ListComponent implements OnInit {
       title: 'Edit Project',
       inputLabel: 'Project Name',
       saveButtonText: 'Update',
+      loadingText: 'Updating',
       type: 'Edit',
       initialValue: project.name,
     };

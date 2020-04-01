@@ -20,7 +20,11 @@
 
     <div class="modal-footer">
       <button type="button" class="btn btn-secondary" (click)="close()">Cancel</button>
-      <button [disabled]='inputForm.invalid || inputForm.pristine' type="button" class="btn btn-primary" (click)="confirm()">{{saveButtonText}}</button>
+      <app-loading-button text={{saveButtonText}} loadingText={{loadingText}} buttonSize='lg' buttonIcon='fa fa-check'
+                                    [isLoading]= 'isLoading' [isFormInvalid]='inputForm.invalid || inputForm.pristine'
+                                    (formSubmit)='confirm()'>
+
+          </app-loading-button>
     </div>
   </div>
 </div>

@@ -3,13 +3,19 @@
     <div class="card-header">
       <div class="row">
         <div class="col-3 text-left">
-          <button (click)=onBack() class="btn btn-primary">BACK</button>
+          <button (click)=onBack() class="btn btn-primary">
+            <i class="fa fa-chevron-left"></i>&nbsp; <span class="btn-text">BACK</span>
+          </button>
         </div>
         <div class="col-6 text-center">
           <h1 style="size: 100px;">EDIT USER</h1>
         </div>
         <div class="col-3 text-right">
-          <button [disabled]='userForm.invalid || userForm.pristine' (click)=onSave() class="btn btn-primary">UPDATE</button>
+          <app-loading-button text='UPDATE' loadingText='UPDATING' buttonSize='lg' buttonIcon='fa fa-check'
+                                    [isLoading]='isLoading' [isFormInvalid]='userForm.invalid'
+                                    (formSubmit)='onSave()'>
+
+          </app-loading-button>
         </div>
       </div>
     </div>
