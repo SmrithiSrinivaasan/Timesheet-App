@@ -64,7 +64,9 @@ export class ListComponent implements OnInit {
     this.bsModalRef.content.save.subscribe((data: string) => {
       this.projectService.addProject(data).then(
         (response: any) => {
+          const key = response.key;
           this.dashboardService.addDashboardCount('projects');
+          this.dashboardService.addTotalHours(key);
           this.toast.success('Project Added Successfully !');
           this.bsModalRef.hide();
         },

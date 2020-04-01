@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import * as moment from 'moment';
 import { ToastrService } from 'ngx-toastr';
 import { map } from 'rxjs/internal/operators/map';
+import { DashboardService } from '../../dashboard/dashboard.service';
 import { PhaseService } from '../../phase/phase.service';
 import { ProjectService } from '../../project/project.service';
 import { EntryService } from '../entry.service';
@@ -33,6 +34,7 @@ export class AddComponent implements OnInit {
   constructor(
     private projectService: ProjectService,
     private phaseService: PhaseService,
+    private dashboardService: DashboardService,
     private formBuilder: FormBuilder,
     private router: Router,
     private entryService: EntryService,
@@ -48,6 +50,7 @@ export class AddComponent implements OnInit {
           changes.map((c: any, index: number) => {
             return {
               name: c.payload.val().name,
+              key: c.payload.key,
             };
           })
         )
@@ -129,7 +132,7 @@ export class AddComponent implements OnInit {
     const authDetails = JSON.parse(localStorage.getItem('auth'));
     const user = authDetails && authDetails.auth;
     const entries = this.entryForm.value;
-    const data = {
+    const data: any = {
       name: user.name,
       uid: user.uid,
       date: moment
@@ -145,9 +148,17 @@ export class AddComponent implements OnInit {
       phase: entries.phase,
       task: entries.task,
     };
+    const filteredProject = this.projects.find(
+      project => project.name === entries.project
+    );
+
     this.entryService
       .addEntry(data)
       .then(() => {
+        this.dashboardService.updateTotalHours(
+          filteredProject.key,
+          data.seconds
+        );
         this.entryForm.reset();
         this.toast.success('Entry Created Successfully');
         this.router.navigate(['entry']);
