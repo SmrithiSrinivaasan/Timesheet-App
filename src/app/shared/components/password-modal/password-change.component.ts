@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AbstractControl, FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 import { ToastrService } from 'ngx-toastr';
 import { AuthenticationService } from '../../../services/authentication.service';
@@ -42,12 +42,6 @@ export class PasswordChangeComponent implements OnInit {
   get confirmPwd() {
     return this.pwdForm.get('confirmPwd');
   }
-
-  // pwdMatch(c: AbstractControl): { invalid: boolean } {
-  //   if (c.get('newPwd').value !== c.get('confirmPwd').value) {
-  //       return {invalid: true};
-  //   }
-  // }
 
   confirm() {
     this.authenticationService
