@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import * as moment from 'moment';
 import { ToastrService } from 'ngx-toastr';
 import { map } from 'rxjs/operators';
+import { DashboardService } from '../../dashboard/dashboard.service';
 import { PhaseService } from '../../phase/phase.service';
 import { ProjectService } from '../../project/project.service';
 import { EntryService } from '../entry.service';
@@ -35,9 +36,14 @@ export class EditComponent implements OnInit {
   ];
   selectedworkType = this.workTypes[0].key;
 
+  oldProjectID: any;
+  oldProjectName: string;
+  oldSeconds: string;
+
   constructor(
     private projectService: ProjectService,
     private phaseService: PhaseService,
+    private dashboardService: DashboardService,
     private formBuilder: FormBuilder,
     private router: Router,
     private route: ActivatedRoute,
@@ -54,6 +60,7 @@ export class EditComponent implements OnInit {
           changes.map((c: any, index: number) => {
             return {
               name: c.payload.val().name,
+              key: c.payload.key,
             };
           })
         )
@@ -88,6 +95,8 @@ export class EditComponent implements OnInit {
         // object.values takes only the details without the key from reponse.val()
         // an array is created and the 0th element of the array is the object with the values.
         const date = new Date(null);
+        this.oldSeconds = this.entryDetail.seconds;
+        this.oldProjectName = this.entryDetail.project;
         date.setSeconds(parseInt(this.entryDetail.seconds, 10));
         const totalHours = date.toISOString().substr(11, 5);
         this.entryForm.patchValue({
@@ -176,9 +185,24 @@ export class EditComponent implements OnInit {
       phase: entries.phase,
       task: entries.task,
     };
+    const filteredProject = this.projects.find(
+      project => project.name === entries.project
+    );
+    this.oldProjectID = this.projects.find(
+      project => project.name === this.oldProjectName
+    );
+
     this.entryService
       .editEntry(this.key, data)
       .then(() => {
+        this.dashboardService.removeTotalhours(
+          this.oldProjectID.key,
+          this.oldSeconds
+        );
+        this.dashboardService.updateTotalHours(
+          filteredProject.key,
+          data.seconds
+        );
         this.entryForm.reset();
         this.toast.success('Entry Updated Successfully');
         this.router.navigate(['entry']);
