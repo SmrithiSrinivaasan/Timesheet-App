@@ -9,6 +9,9 @@ import { UserService } from '../user.service';
   templateUrl: './edit.component.html',
 })
 export class EditComponent implements OnInit {
+  isLoading = false;
+  isPageLoading = false;
+
   userForm = this.formBuilder.group({
     name: ['', [Validators.required]],
     email: [
@@ -17,7 +20,6 @@ export class EditComponent implements OnInit {
     ],
   });
   uid: string;
-  isPageLoading = false;
   userDetail: any;
 
   constructor(
@@ -65,7 +67,15 @@ export class EditComponent implements OnInit {
     this.router.navigate(['user']);
   }
 
+  canDeactivate() {
+    if (this.userForm.dirty) {
+      return window.confirm('Discard Changes?');
+    }
+    return true;
+  }
+
   onSave() {
+    this.isLoading = true;
     const userDetail: any = {
       name: this.userForm.getRawValue().name,
       email: this.userForm.getRawValue().email,
@@ -73,11 +83,14 @@ export class EditComponent implements OnInit {
     this.userService
       .editUser(userDetail)
       .then((userResponse: any) => {
+        this.userForm.reset();
         this.toast.success('User Updated Successfully');
         this.router.navigate(['user']);
+        this.isLoading = false;
       })
       .catch((dbError: any) => {
         this.toast.error(dbError.message);
+        this.isLoading = false;
       });
   }
 }

@@ -26,8 +26,12 @@ export class AuthenticationService {
     );
   }
 
-  // /* Sign out *
-  // SignOut() {
-  //   this.angularFireAuth.auth.signOut();
-  // }
+  changePwd(pwd: string) {
+    return this.angularFireAuth.auth.currentUser.updatePassword(pwd);
+  }
+
+  // Sign out
+  SignOut() {
+    return this.angularFireAuth.auth.signOut();
+  }
 }

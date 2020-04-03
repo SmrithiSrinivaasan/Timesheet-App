@@ -1,8 +1,89 @@
 <div class="animated fadeIn">
-  <div class="card">
-    <div class="card-body">
-
+  <div *ngIf="isPageLoading" class="card">
+    <div class="loading-indicator">
+      <mat-spinner style="margin:0 auto;" diameter='40'></mat-spinner>
+      <h1 style="text-align: center">Loading...</h1>
     </div>
   </div>
-  <!--/.card-->
+
+
+  <div *ngIf="!isPageLoading && isAdmin()" class="card">
+    <div class="card-body">
+      <div class="row">
+        <div class="col-6">
+          <div class="card text-white bg-info">
+            <div class="card-header" style="text-align: center; font-size: 40px; padding: 20px;">
+              USERS
+            </div>
+            <div class="card-body" style="text-align: center; font-size: 60px; padding: 40px;">
+              {{ totalUsers }}
+            </div>
+          </div>
+        </div><!--/.col-->
+
+        <div class="col-6">
+          <div class="card text-white bg-info">
+            <div class="card-header" style="text-align: center; font-size: 40px; padding: 20px;">
+              PROJECTS
+            </div>
+            <div class="card-body" style="text-align: center; font-size: 60px; padding: 40px;">
+              {{ totalProjects }}
+            </div>
+          </div>
+        </div><!--/.col-->
+      </div><!--/.row-->
+    </div><!--/.card-body-->
+  </div><!--/.card-->
+
+
+  <div *ngIf="!isPageLoading && isAdmin()" class="card">
+    <div *ngIf="totalHours.length === 0" class="card-body">
+      No Entries Available
+    </div>
+
+    <div *ngIf="totalHours.length > 0" class="card-body">
+    <table class='table table-bordered'>
+      <thead>
+        <tr>
+          <th>S.No.</th>
+          <th>Project Name</th>
+          <th>Total Hours</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor = "let total of totalHours, index as i">
+          <td>{{i+1}}</td>
+          <td>{{total.projectName}} </td>
+          <td>{{total.totalTime}} </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  </div>
+
+  <div *ngIf="!isPageLoading && !isAdmin()" class="card">
+    <div *ngIf="totalHours.length === 0" class="card-body">
+      No Entries Available
+    </div>
+
+    <div *ngIf="totalHours.length > 0" class="card-body">
+      <table class='table table-bordered'>
+        <thead>
+          <tr>
+            <th>S.No.</th>
+            <th>Project Name</th>
+            <th>Total Hours</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor = "let total of totalHours, index as i">
+            <td>{{i+1}}</td>
+            <td>{{total.projectName}} </td>
+            <td>{{total.totalTime}} </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
 </div>

@@ -1,4 +1,4 @@
-<div class='card animated fadeIn'>
+<div class='card animated fadeIn' style="padding: 20px;">
   <div *ngIf="!isPageLoading && !hasProject()" class="card-body">
     No Projects Available - Click to Add
   </div>
@@ -7,6 +7,7 @@
     <mat-spinner style="margin:0 auto;" diameter='40'></mat-spinner>
     <h1 style="text-align: center">Loading...</h1>
   </div>
+
 
   <table *ngIf="!isPageLoading && hasProject()" class='table table-bordered'>
     <thead>
@@ -21,8 +22,8 @@
         <td>{{i+1}}</td>
         <td>{{project.name}}</td>
         <td>
-          <button (click)=onEdit(project) class ='btn-primary'>Edit</button>
-          <button (click)=onDelete(project) class ='btn-primary'>Delete</button>
+          <button (click)=onEdit(project) class =' btn btn-warning'>Edit</button>
+          <!-- <button (click)=onDelete(project) class ='btn btn-danger'>Delete</button> -->
         </td>
       </tr>
     </tbody>

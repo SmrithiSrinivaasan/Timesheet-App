@@ -2,7 +2,9 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { environment } from '../../../environments/environment';
 import { AuthGuardService } from '../../shared/guards/auth-guard.service';
+import { CanDeactivateGuardsService } from '../../shared/guards/can-deactivate-guards.service';
 import { AddComponent } from './add/add.component';
+import { EditComponent } from './edit/edit.component';
 import { ListComponent } from './list/list.component';
 
 const routes: Routes = [
@@ -31,6 +33,17 @@ const routes: Routes = [
           roles: [environment.Role.User],
         },
         canActivate: [AuthGuardService],
+        canDeactivate: [CanDeactivateGuardsService],
+      },
+      {
+        path: 'edit/:id', // mentioned as id but sending key only
+        component: EditComponent,
+        data: {
+          title: 'Edit Entry',
+          roles: [environment.Role.User],
+        },
+        canActivate: [AuthGuardService],
+        canDeactivate: [CanDeactivateGuardsService],
       },
     ],
   },

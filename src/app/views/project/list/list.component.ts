@@ -52,6 +52,7 @@ export class ListComponent implements OnInit {
       title: 'Add Project',
       inputLabel: 'Project Name',
       saveButtonText: 'Save',
+      loadingText: 'Saving',
       type: 'Add',
       initialValue: '',
     };
@@ -64,7 +65,9 @@ export class ListComponent implements OnInit {
     this.bsModalRef.content.save.subscribe((data: string) => {
       this.projectService.addProject(data).then(
         (response: any) => {
+          const key = response.key;
           this.dashboardService.addDashboardCount('projects');
+          this.dashboardService.addTotalHours(key);
           this.toast.success('Project Added Successfully !');
           this.bsModalRef.hide();
         },
@@ -80,6 +83,7 @@ export class ListComponent implements OnInit {
       title: 'Edit Project',
       inputLabel: 'Project Name',
       saveButtonText: 'Update',
+      loadingText: 'Updating',
       type: 'Edit',
       initialValue: project.name,
     };

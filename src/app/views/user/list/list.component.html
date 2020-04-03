@@ -1,4 +1,4 @@
-<div class='card animated fadeIn'>
+<div class='card animated fadeIn' style="padding: 20px;">
   <div *ngIf="!isPageLoading && !hasUser()" class="card-body">
     No Users Available - Click to Add
   </div>
@@ -23,9 +23,11 @@
         <td>{{user.name}}</td>
         <td>{{user.email}}</td>
         <td>
-          <button (click)=onEdit(user.uid) class ='btn-primary'>Edit</button>
+          &nbsp;
+          <button (click)=onEdit(user.uid) class ='btn btn-warning'>Edit</button>
           <!-- we use uid because the key has the email id and it shdnt be displayed in the url-->
-          <button (click)=onDelete(user) class ='btn-primary'>Delete</button>
+          &nbsp; &nbsp; &nbsp;
+          <button (click)=onDelete(user) class ='btn btn-danger'>Delete</button>
         </td>
       </tr>
     </tbody>

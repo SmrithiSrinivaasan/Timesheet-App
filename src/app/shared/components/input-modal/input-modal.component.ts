@@ -10,8 +10,10 @@ export class InputModalComponent implements OnInit {
   title: string;
   inputLabel: string;
   saveButtonText: string;
+  loadingText: string;
   type: string;
   initialValue: string;
+  isLoading: boolean;
 
   inputForm = this.formBuilder.group({
     name: ['', [Validators.required, Validators.minLength(3)]],
@@ -36,6 +38,7 @@ export class InputModalComponent implements OnInit {
   }
 
   confirm() {
+    this.isLoading = true;
     this.save.emit(this.inputForm.value); // to send data to list.ts
   }
 

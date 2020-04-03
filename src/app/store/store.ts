@@ -8,19 +8,22 @@ import {
   MetaReducer,
 } from '@ngrx/store';
 import { localStorageSync } from 'ngrx-store-localstorage';
+import { entryReducer } from '../views/entry/store/reducer/entryReducer';
 import { authReducer } from '../views/login/store/reducers/authReducers';
 
 export const FEATURE_NAME = 'Timesheet';
 
-const STORE_KEYS_TO_PERSIST = ['auth'];
+const STORE_KEYS_TO_PERSIST = ['auth', 'entries'];
 // add next stuff in the array
 export interface IStoreState {
   auth: any;
+  entries: any;
   // here
 }
 
 export const reducers: ActionReducerMap<IStoreState> = {
   auth: authReducer,
+  entries: entryReducer,
   // stores details in auth key
   // here also
 };

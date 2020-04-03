@@ -1,24 +1,21 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import * as moment from 'moment';
 import { ToastrService } from 'ngx-toastr';
-import { map } from 'rxjs/internal/operators/map';
+import { map } from 'rxjs/operators';
 import { DashboardService } from '../../dashboard/dashboard.service';
 import { PhaseService } from '../../phase/phase.service';
 import { ProjectService } from '../../project/project.service';
 import { EntryService } from '../entry.service';
 
 @Component({
-  selector: 'app-add',
-  templateUrl: './add.component.html',
+  selector: 'app-edit',
+  templateUrl: './edit.component.html',
 })
-export class AddComponent implements OnInit {
-  isLoading = false;
-
+export class EditComponent implements OnInit {
   projects = [];
   phases = [];
-  filteredProject;
 
   entryForm = this.formBuilder.group({
     workFrom: [null, [Validators.required]],
@@ -27,6 +24,12 @@ export class AddComponent implements OnInit {
     phase: [null, [Validators.required]],
     task: ['', [Validators.required]],
   });
+
+  key: string;
+  entryDetail: any;
+  isPageLoading = false;
+  isLoading = false;
+
   workTypes = [
     { key: 'Office', value: 'Office' },
     { key: 'Home', value: 'Home' },
@@ -34,12 +37,18 @@ export class AddComponent implements OnInit {
   ];
   selectedworkType = this.workTypes[0].key;
 
+  oldProjectID: any;
+  oldProjectName: string;
+  oldSeconds: string;
+  filteredProject: any;
+
   constructor(
     private projectService: ProjectService,
     private phaseService: PhaseService,
     private dashboardService: DashboardService,
     private formBuilder: FormBuilder,
     private router: Router,
+    private route: ActivatedRoute,
     private entryService: EntryService,
     private toast: ToastrService
   ) {}
@@ -76,6 +85,33 @@ export class AddComponent implements OnInit {
       )
       .subscribe(datas => {
         this.phases = datas;
+      });
+
+    this.route.params.subscribe(params => {
+      this.key = params.id;
+    });
+    this.entryService
+      .selectedEntryByKey(this.key)
+      .then((response: any) => {
+        this.entryDetail = Object.values(response.val())[0];
+        // object.values takes only the details without the key from reponse.val()
+        // an array is created and the 0th element of the array is the object with the values.
+        const date = new Date(null);
+        this.oldSeconds = this.entryDetail.seconds;
+        this.oldProjectName = this.entryDetail.project;
+        date.setSeconds(parseInt(this.entryDetail.seconds, 10));
+        const totalHours = date.toISOString().substr(11, 5);
+        this.entryForm.patchValue({
+          workFrom: this.entryDetail.workFrom,
+          hours: totalHours,
+          project: this.entryDetail.project,
+          phase: this.entryDetail.phase,
+          task: this.entryDetail.task,
+        });
+        this.isPageLoading = false;
+      })
+      .catch((error: any) => {
+        this.isPageLoading = false;
       });
   }
 
@@ -137,7 +173,7 @@ export class AddComponent implements OnInit {
     const authDetails = JSON.parse(localStorage.getItem('auth'));
     const user = authDetails && authDetails.auth;
     const entries = this.entryForm.value;
-    const data: any = {
+    const data = {
       name: user.name,
       uid: user.uid,
       date: moment
@@ -162,15 +198,26 @@ export class AddComponent implements OnInit {
       this.filteredProject = { key: 'leave', name: 'leave' };
     }
 
+    if (this.oldProjectName === 'leave') {
+      this.oldProjectID = { key: 'leave', name: 'leave' };
+    } else {
+      this.oldProjectID = this.projects.find(
+        project => project.name === this.oldProjectName
+      );
+    }
     this.entryService
-      .addEntry(data)
+      .editEntry(this.key, data)
       .then(() => {
+        this.dashboardService.removeTotalhours(
+          this.oldProjectID.key,
+          this.oldSeconds
+        );
         this.dashboardService.updateTotalHours(
           this.filteredProject.key,
           data.seconds
         );
         this.entryForm.reset();
-        this.toast.success('Entry Created Successfully');
+        this.toast.success('Entry Updated Successfully');
         this.isLoading = false;
         this.router.navigate(['entry']);
       })
