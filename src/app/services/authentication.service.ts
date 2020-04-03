@@ -30,8 +30,8 @@ export class AuthenticationService {
     return this.angularFireAuth.auth.currentUser.updatePassword(pwd);
   }
 
-  // /* Sign out *
-  // SignOut() {
-  //   this.angularFireAuth.auth.signOut();
-  // }
+  // Sign out
+  SignOut() {
+    return this.angularFireAuth.auth.signOut();
+  }
 }
