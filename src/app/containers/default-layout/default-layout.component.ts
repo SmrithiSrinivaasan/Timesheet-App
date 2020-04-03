@@ -48,6 +48,17 @@ export class DefaultLayoutComponent {
   }
 
   onLogout() {
+    this.authService
+      .SignOut()
+      .then(() => {
+        this.navToLogin();
+      })
+      .catch(() => {
+        this.navToLogin();
+      });
+  }
+
+  navToLogin() {
     this.store.dispatch(new clearAuthAction.ClearAuth());
     this.store.dispatch(new EntriesAction.ClearEntries());
     this.router.navigate(['/login']);
