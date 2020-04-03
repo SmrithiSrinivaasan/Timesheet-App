@@ -9,6 +9,8 @@ import { AuthenticationService } from '../../../services/authentication.service'
   templateUrl: './password-change.component.html',
 })
 export class PasswordChangeComponent implements OnInit {
+  isLoading: boolean;
+
   pwdForm = this.formBuilder.group({
     currentPwd: ['', [Validators.required]],
     newPwd: ['', [Validators.required]],
@@ -44,14 +46,17 @@ export class PasswordChangeComponent implements OnInit {
   }
 
   confirm() {
+    this.isLoading = true;
     this.authenticationService
       .changePwd(this.pwdForm.value.newPwd)
       .then((response: any) => {
         this.toast.success('Password Changed Successfully !');
+        this.isLoading = false;
         this.close();
       })
       .catch((error: any) => {
         this.toast.error(error.message);
+        this.isLoading = false;
       });
   }
 
