@@ -104,7 +104,7 @@
           <td>{{entry.task}}</td>
           <td>{{entry.seconds}}</td>
           <td *ngIf="!isAdmin()">
-            <button (click)=onEdit(entry.key) class ='btn-primary'>Edit</button>
+            <button (click)=onEdit(entry.key) class ='btn btn-warning'>Edit</button>
           </td>
         </tr>
       </tbody>
@@ -128,4 +128,5 @@
 <button *ngIf="!isAdmin()" (click)=onAdd() class='fab' mat-fab color='primary'>
     <mat-icon>add</mat-icon>
 </button>
+
 </div>
