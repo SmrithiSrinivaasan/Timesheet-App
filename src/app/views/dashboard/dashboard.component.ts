@@ -4,6 +4,7 @@ import { chain, sum } from 'lodash';
 import * as moment from 'moment';
 import { map } from 'rxjs/internal/operators/map';
 import { environment } from '../../../environments/environment';
+import { EntryService } from '../entry/entry.service';
 import { ProjectService } from '../project/project.service';
 import { DashboardService } from './dashboard.service';
 
@@ -21,8 +22,11 @@ export class DashboardComponent implements OnInit {
   constructor(
     private dashboardService: DashboardService,
     private projectService: ProjectService,
-    private store: Store<any>
-  ) {}
+    private store: Store<any>,
+    private entryService: EntryService
+  ) {
+    this.entryService.getEntries();
+  }
 
   ngOnInit(): void {
     this.loadProject();
@@ -80,10 +84,6 @@ export class DashboardComponent implements OnInit {
           const secondsToHours = this.secondsToHms(hours[key]);
           this.projects.find(project => {
             if (project.key === key) {
-              // this.totalHours.push({
-              //   projectName: project.name,
-              //   totalTime: secondsToHours === '' ? 0 : secondsToHours,
-              // });
               this.projectHours[key] = {
                 projectName: project.name,
                 totalTime: secondsToHours === '' ? 0 : secondsToHours,
@@ -115,6 +115,9 @@ export class DashboardComponent implements OnInit {
           };
         })
         .value();
+      this.totalHours = this.totalHours.filter(
+        totalHour => totalHour.projectName !== 'leave'
+      );
       this.isPageLoading = false;
     });
   }
