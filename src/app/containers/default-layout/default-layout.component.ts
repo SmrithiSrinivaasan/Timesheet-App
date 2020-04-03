@@ -6,6 +6,7 @@ import { ToastrService } from 'ngx-toastr';
 import { navItems } from '../../_nav';
 import { AuthenticationService } from '../../services/authentication.service';
 import { PasswordChangeComponent } from '../../shared/components/password-modal/password-change.component';
+import * as EntriesAction from '../../views/entry/store/actions/clearEntries';
 import * as clearAuthAction from '../../views/login/store/actions/clearAuthAction';
 
 @Component({
@@ -48,6 +49,7 @@ export class DefaultLayoutComponent {
 
   onLogout() {
     this.store.dispatch(new clearAuthAction.ClearAuth());
+    this.store.dispatch(new EntriesAction.ClearEntries());
     this.router.navigate(['/login']);
     this.toast.success('Logged Out Successfully !');
   }

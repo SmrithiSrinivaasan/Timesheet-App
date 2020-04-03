@@ -23,6 +23,21 @@ export class DashboardService {
     });
   }
 
+  getDashboardData() {
+    return this.dashboardRef;
+  }
+
+  removeDashboardCount(name: string) {
+    const currentCount = this.db.database.ref(this.dbPath);
+    currentCount.ref.once('value').then(snapshot => {
+      const obj = snapshot.val();
+      currentCount.update({
+        [name]: obj && obj[name] ? obj[name] - 1 : 0,
+        // obj checks dashboard & obj[name] check for name oda count
+      });
+    });
+  }
+
   // when project is created
   addTotalHours(key: string) {
     const totalHours = this.db.database.ref(this.dbPath + '/totalHours');
@@ -50,17 +65,6 @@ export class DashboardService {
       const totalSeconds = obj[oldProjectID];
       totalHours.update({
         [oldProjectID]: totalSeconds - Number(oldSeconds),
-      });
-    });
-  }
-
-  removeDashboardCount(name: string) {
-    const currentCount = this.db.database.ref(this.dbPath);
-    currentCount.ref.once('value').then(snapshot => {
-      const obj = snapshot.val();
-      currentCount.update({
-        [name]: obj && obj[name] ? obj[name] - 1 : 0,
-        // obj checks dashboard & obj[name] check for name oda count
       });
     });
   }

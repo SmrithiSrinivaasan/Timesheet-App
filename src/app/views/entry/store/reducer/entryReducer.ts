@@ -1,4 +1,3 @@
-import { syncStateUpdate } from 'ngrx-store-localstorage';
 import { Actions } from '../actions';
 import { ActionTypes } from '../actionTypes';
 // it will automatically take index, if we give other name apart from index then specify it
@@ -28,6 +27,18 @@ export function entryReducer(state: any = initialState, action: Actions) {
       return {
         ...state,
         filters: action.payload,
+      };
+
+    case ActionTypes.CLEAR_ENTRIES:
+      return {
+        datas: [],
+        filters: {
+          project: 'all',
+          phase: 'all',
+          name: 'all',
+          fromDate: '',
+          toDate: '',
+        },
       };
 
     default:

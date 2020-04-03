@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, NgZone, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
@@ -27,7 +27,8 @@ export class LoginComponent implements OnInit {
     private authenticationService: AuthenticationService,
     private toast: ToastrService,
     private store: Store<any>,
-    private userService: UserService
+    private userService: UserService,
+    private ngZone: NgZone
   ) {}
 
   ngOnInit() {}
@@ -69,7 +70,7 @@ export class LoginComponent implements OnInit {
               this.store.dispatch(new updateAuthAction.UpdateAuth(authDetails));
               // this calls the actions folder then from there reducer and stores it in the store
               this.toast.success('Login Successful !');
-              this.router.navigate(['/dashboard']);
+              this.ngZone.run(() => this.router.navigate(['/dashboard']));
             })
             .catch((error: any) => {
               this.submitted = false;
