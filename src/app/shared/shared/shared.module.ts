@@ -6,6 +6,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { ModalModule } from 'ngx-bootstrap/modal';
+import { ConnectionStatusComponent } from '../components/connection-status/connection-status.component';
 import { DeleteModalComponent } from '../components/delete-modal/delete-modal.component';
 import { InputModalComponent } from '../components/input-modal/input-modal.component';
 import { LoadingButtonComponent } from '../components/loading-button/loading-button.component';
@@ -17,6 +18,7 @@ import { PasswordChangeComponent } from '../components/password-modal/password-c
     DeleteModalComponent,
     PasswordChangeComponent,
     LoadingButtonComponent,
+    ConnectionStatusComponent,
   ],
   imports: [
     CommonModule,
@@ -37,11 +39,13 @@ import { PasswordChangeComponent } from '../components/password-modal/password-c
     MatProgressSpinnerModule,
     NgSelectModule,
     LoadingButtonComponent,
+    ConnectionStatusComponent,
   ],
   entryComponents: [
     InputModalComponent,
     DeleteModalComponent,
     PasswordChangeComponent,
+    ConnectionStatusComponent,
   ],
 })
 export class SharedModule {}
