@@ -40,6 +40,7 @@ export class EditComponent implements OnInit {
   oldProjectID: any;
   oldProjectName: string;
   oldSeconds: string;
+  filteredProject: any;
 
   constructor(
     private projectService: ProjectService,
@@ -188,13 +189,22 @@ export class EditComponent implements OnInit {
       phase: entries.phase,
       task: entries.task,
     };
-    const filteredProject = this.projects.find(
-      project => project.name === entries.project
-    );
-    this.oldProjectID = this.projects.find(
-      project => project.name === this.oldProjectName
-    );
 
+    if (entries.project !== 'leave') {
+      this.filteredProject = this.projects.find(
+        project => project.name === entries.project
+      );
+    } else {
+      this.filteredProject = { key: 'leave', name: 'leave' };
+    }
+
+    if (this.oldProjectName === 'leave') {
+      this.oldProjectID = { key: 'leave', name: 'leave' };
+    } else {
+      this.oldProjectID = this.projects.find(
+        project => project.name === this.oldProjectName
+      );
+    }
     this.entryService
       .editEntry(this.key, data)
       .then(() => {
@@ -203,7 +213,7 @@ export class EditComponent implements OnInit {
           this.oldSeconds
         );
         this.dashboardService.updateTotalHours(
-          filteredProject.key,
+          this.filteredProject.key,
           data.seconds
         );
         this.entryForm.reset();
