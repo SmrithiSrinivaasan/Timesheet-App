@@ -51,7 +51,7 @@ export class DashboardService {
     const totalHours = this.db.database.ref(this.dbPath + '/totalHours');
     totalHours.ref.once('value').then(snapshot => {
       const obj = snapshot.val();
-      const totalSeconds = obj[key];
+      const totalSeconds = obj[key] || 0;
       totalHours.update({
         [key]: totalSeconds + Number(seconds),
       });

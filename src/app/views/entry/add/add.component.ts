@@ -18,6 +18,7 @@ export class AddComponent implements OnInit {
 
   projects = [];
   phases = [];
+  filteredProject;
 
   entryForm = this.formBuilder.group({
     workFrom: [null, [Validators.required]],
@@ -152,15 +153,20 @@ export class AddComponent implements OnInit {
       phase: entries.phase,
       task: entries.task,
     };
-    const filteredProject = this.projects.find(
-      project => project.name === entries.project
-    );
+
+    if (entries.project !== 'leave') {
+      this.filteredProject = this.projects.find(
+        project => project.name === entries.project
+      );
+    } else {
+      this.filteredProject = { key: 'leave', name: 'leave' };
+    }
 
     this.entryService
       .addEntry(data)
       .then(() => {
         this.dashboardService.updateTotalHours(
-          filteredProject.key,
+          this.filteredProject.key,
           data.seconds
         );
         this.entryForm.reset();
