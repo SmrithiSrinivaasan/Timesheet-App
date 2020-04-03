@@ -1,4 +1,4 @@
-<div class='card animated fadeIn'>
+<div class='card animated fadeIn' style="padding: 20px;">
   <div *ngIf="!isPageLoading && !hasPhase()" class="card-body">
     No Phases Available - Click to Add
   </div>
@@ -21,8 +21,10 @@
         <td>{{i+1}}</td>
         <td>{{phase.name}}</td>
         <td>
-          <button (click)=onEdit(phase) class ='btn-primary'>Edit</button>
-          <button (click)=onDelete(phase) class ='btn-primary'>Delete</button>
+          &nbsp;
+          <button (click)=onEdit(phase) class ='btn btn-warning'>Edit</button>
+          &nbsp; &nbsp; &nbsp;
+          <button (click)=onDelete(phase) class ='btn btn-danger'>Delete</button>
         </td>
       </tr>
     </tbody>
