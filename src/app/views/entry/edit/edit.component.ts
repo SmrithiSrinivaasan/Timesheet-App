@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { upperFirst } from 'lodash';
 import * as moment from 'moment';
 import { ToastrService } from 'ngx-toastr';
 import { map } from 'rxjs/operators';
@@ -187,7 +188,7 @@ export class EditComponent implements OnInit {
         .toString(),
       project: entries.project,
       phase: entries.phase,
-      task: entries.task,
+      task: upperFirst(entries.task),
     };
 
     if (entries.project !== 'leave') {

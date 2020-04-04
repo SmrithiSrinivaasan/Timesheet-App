@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { upperFirst } from 'lodash';
 import { ToastrService } from 'ngx-toastr';
 import { UserService } from '../user.service';
 
@@ -13,7 +14,7 @@ export class EditComponent implements OnInit {
   isPageLoading = false;
 
   userForm = this.formBuilder.group({
-    name: ['', [Validators.required]],
+    name: ['', [Validators.required, Validators.maxLength(30)]],
     email: [
       { value: '', disabled: true },
       [Validators.required, Validators.email],
@@ -77,7 +78,7 @@ export class EditComponent implements OnInit {
   onSave() {
     this.isLoading = true;
     const userDetail: any = {
-      name: this.userForm.getRawValue().name,
+      name: upperFirst(this.userForm.getRawValue().name),
       email: this.userForm.getRawValue().email,
     };
     this.userService

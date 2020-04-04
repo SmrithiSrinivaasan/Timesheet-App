@@ -101,7 +101,7 @@
           <td>{{entry.workFrom}}</td>
           <td>{{entry.project}}</td>
           <td>{{entry.phase}}</td>
-          <td>{{entry.task}}</td>
+          <td style="width:500px;">{{entry.task}}</td>
           <td>{{entry.seconds}}</td>
           <td *ngIf="!isAdmin()">
             <button (click)=onEdit(entry.key) class ='btn btn-warning'>Edit</button>
