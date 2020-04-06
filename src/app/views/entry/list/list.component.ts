@@ -29,6 +29,7 @@ export class ListComponent implements OnInit, OnDestroy {
   subscription: Subscription;
   selectedFromDate: any;
   selectedToDate: any;
+  isToDateDisabled = true;
   maxDate = moment(new Date()).format('YYYY-MM-DD');
 
   constructor(
@@ -185,15 +186,26 @@ export class ListComponent implements OnInit, OnDestroy {
   }
 
   updateDate() {
-    if (this.selectedFromDate && this.selectedToDate) {
-      const filteredData = {
-        project: this.selectedProject,
-        phase: this.selectedPhase,
-        name: this.selectedUser,
-        fromDate: this.selectedFromDate,
-        toDate: this.selectedToDate,
-      };
-      this.store.dispatch(new UpdateFilters(filteredData));
+    if (this.selectedFromDate) {
+      this.isToDateDisabled = false;
+    } else {
+      this.isToDateDisabled = true;
+      this.selectedToDate = '';
+      this.updateEntryFilters();
     }
+    if (this.selectedFromDate && this.selectedToDate) {
+      this.updateEntryFilters();
+    }
+  }
+
+  updateEntryFilters() {
+    const filteredData = {
+      project: this.selectedProject,
+      phase: this.selectedPhase,
+      name: this.selectedUser,
+      fromDate: this.selectedFromDate,
+      toDate: this.selectedToDate,
+    };
+    this.store.dispatch(new UpdateFilters(filteredData));
   }
 }
