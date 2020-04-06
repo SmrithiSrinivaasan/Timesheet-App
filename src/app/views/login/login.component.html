@@ -20,7 +20,7 @@
                         </div>
                         <p class='help-block' *ngIf="email.touched && email.invalid">
                           <small class="text-danger" *ngIf="email.errors?.required"> Email is required</small>
-                          <small class="text-danger" *ngIf="email.errors?.email"> Invalid Email</small>
+                          <small class="text-danger" *ngIf="email.errors?.pattern"> Invalid Email</small>
                         </p>
                     </div>
                   </div>

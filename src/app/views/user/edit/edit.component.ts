@@ -18,7 +18,10 @@ export class EditComponent implements OnInit {
     name: ['', [Validators.required, Validators.maxLength(30)]],
     email: [
       { value: '', disabled: true },
-      [Validators.required, Validators.email],
+      [
+        Validators.required,
+        Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$'),
+      ],
     ],
   });
   uid: string;
