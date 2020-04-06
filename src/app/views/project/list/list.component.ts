@@ -6,6 +6,7 @@ import { map } from 'rxjs/operators';
 import { DeleteModalComponent } from '../../../shared/components/delete-modal/delete-modal.component';
 import { InputModalComponent } from '../../../shared/components/input-modal/input-modal.component';
 import { DashboardService } from '../../dashboard/dashboard.service';
+import { EntryService } from '../../entry/entry.service';
 import { ProjectService } from '../project.service';
 
 @Component({
@@ -16,12 +17,14 @@ export class ListComponent implements OnInit {
   projects = [];
   bsModalRef: BsModalRef;
   isPageLoading = false;
+  entryKeys = [];
 
   constructor(
     private modalService: BsModalService,
     private projectService: ProjectService,
     private toast: ToastrService,
-    private dashboardService: DashboardService
+    private dashboardService: DashboardService,
+    private entryService: EntryService
   ) {}
 
   ngOnInit(): void {
@@ -93,19 +96,41 @@ export class ListComponent implements OnInit {
       initialState,
     });
     this.bsModalRef.content.closeBtnName = 'Close';
+    this.entryService
+      .getEntryDetails(project.name, 'project')
+      .then((snapshot: any) => {
+        if (snapshot.val()) {
+          this.entryKeys = Object.keys(snapshot.val());
+        }
+      });
 
     // communication with input-modal
-    this.bsModalRef.content.save.subscribe((data: string) => {
+    this.bsModalRef.content.save.subscribe((data: any) => {
       this.projectService.editProject(project.key, data).then(
         (response: any) => {
-          this.toast.success('Project Updated Successfully !');
-          this.bsModalRef.hide();
+          if (this.entryKeys.length > 0) {
+            const updatedProjectName = { project: data.name };
+            this.entryKeys.map(entryKey => {
+              this.entryService.updateEditInEntries(
+                entryKey,
+                updatedProjectName
+              );
+            });
+            this.closeDialog();
+          } else {
+            this.closeDialog();
+          }
         },
         (error: any) => {
           this.toast.error(error.message);
         }
       );
     });
+  }
+
+  closeDialog() {
+    this.toast.success('Project Updated Successfully !');
+    this.bsModalRef.hide();
   }
 
   onDelete(project: any) {
