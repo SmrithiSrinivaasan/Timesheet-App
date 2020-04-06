@@ -51,7 +51,7 @@
               <input [class.is-invalid]='email.touched && email.invalid' type="text" class="form-control" formControlName="email" />
               <div *ngIf="email.touched && email.invalid">
                 <small *ngIf="email.errors?.required" class='text-danger'> User Email is required</small>
-                <small *ngIf="email.errors?.email" class='text-danger'> Invalid User Email</small>
+                <small *ngIf="email.errors?.pattern" class='text-danger'> Invalid User Email</small>
               </div>
             </div>
           </div>
