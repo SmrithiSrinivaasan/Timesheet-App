@@ -70,7 +70,8 @@
         name="date-input" placeholder="date"
         type="date" max= {{maxDate}} min= {{selectedFromDate}}
         [(ngModel)]= "selectedToDate"
-        (change)='updateDate()' >
+        (change)='updateDate()'
+        [disabled] = 'isToDateDisabled' >
       </div>
 
     </div>

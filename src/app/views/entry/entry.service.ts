@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFireDatabase, AngularFireList } from '@angular/fire/database';
 import { Store } from '@ngrx/store';
+import { orderBy } from 'lodash';
 import * as moment from 'moment';
 import { map } from 'rxjs/operators';
 import { environment } from '../../../environments/environment';
@@ -54,19 +55,18 @@ export class EntryService {
         )
       )
       .subscribe(datas => {
+        const orderedEntries = orderBy(datas, 'date', 'desc');
         // datas has all the entries from the db
         if (role === environment.Role.Admin) {
-          this.store.dispatch(new EntriesAction.FetchEntries(datas));
+          this.store.dispatch(new EntriesAction.FetchEntries(orderedEntries));
         } else {
-          const filteredData = datas.filter(data => data.uid === user.uid);
+          const filteredData = orderedEntries.filter(
+            data => data.uid === user.uid
+          );
           this.store.dispatch(new EntriesAction.FetchEntries(filteredData));
         }
       });
   }
-
-  // getEntries() {
-  //   return this.entryRef;
-  // }
 
   selectedEntryByKey(key: string) {
     return this.db.database

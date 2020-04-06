@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { orderBy } from 'lodash';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { ToastrService } from 'ngx-toastr';
 import { map } from 'rxjs/operators';
@@ -42,7 +43,8 @@ export class ListComponent implements OnInit {
         )
       )
       .subscribe(datas => {
-        this.projects = datas;
+        const orderedProjects = orderBy(datas, 'key', 'desc');
+        this.projects = orderedProjects;
         this.isPageLoading = false;
       });
   }
