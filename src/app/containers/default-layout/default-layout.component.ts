@@ -35,6 +35,7 @@ export class DefaultLayoutComponent {
     this.authDetails = JSON.parse(localStorage.getItem('auth'));
     const role =
       this.authDetails && this.authDetails.auth && this.authDetails.auth.role;
+    console.log(this.authDetails);
 
     navItems.map(navItem => {
       if (navItem.allowedRoles.includes(role)) {
