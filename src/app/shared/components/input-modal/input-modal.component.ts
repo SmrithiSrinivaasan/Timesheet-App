@@ -1,5 +1,6 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
+import { upperFirst } from 'lodash';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 
 @Component({
@@ -16,7 +17,10 @@ export class InputModalComponent implements OnInit {
   isLoading: boolean;
 
   inputForm = this.formBuilder.group({
-    name: ['', [Validators.required, Validators.minLength(3)]],
+    name: [
+      '',
+      [Validators.required, Validators.minLength(3), Validators.maxLength(15)],
+    ],
   });
 
   @Output() save = new EventEmitter(); // communication to parent
@@ -39,6 +43,7 @@ export class InputModalComponent implements OnInit {
 
   confirm() {
     this.isLoading = true;
+    this.inputForm.value.name = upperFirst(this.inputForm.value.name);
     this.save.emit(this.inputForm.value); // to send data to list.ts
   }
 

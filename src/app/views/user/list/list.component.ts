@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { orderBy } from 'lodash';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { ToastrService } from 'ngx-toastr';
 import { map } from 'rxjs/operators';
@@ -45,7 +46,8 @@ export class ListComponent implements OnInit {
         )
       )
       .subscribe(datas => {
-        this.users = datas;
+        const orderedUsers = orderBy(datas, 'name', 'asc');
+        this.users = orderedUsers;
         this.isPageLoading = false;
       });
   }

@@ -1,14 +1,11 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { select, Store } from '@ngrx/store';
-import { filter, omitBy } from 'lodash';
+import { filter, omitBy, uniqBy } from 'lodash';
 import * as moment from 'moment';
 import { Subscription } from 'rxjs';
 import { map } from 'rxjs/internal/operators/map';
 import { environment } from '../../../../environments/environment';
-import { PhaseService } from '../../phase/phase.service';
-import { ProjectService } from '../../project/project.service';
-import { UserService } from '../../user/user.service';
 import { EntryService } from '../entry.service';
 import { UpdateFilters } from '../store/actions/updateFilters';
 
@@ -29,12 +26,10 @@ export class ListComponent implements OnInit, OnDestroy {
   subscription: Subscription;
   selectedFromDate: any;
   selectedToDate: any;
+  isToDateDisabled = true;
   maxDate = moment(new Date()).format('YYYY-MM-DD');
 
   constructor(
-    private userService: UserService,
-    private projectService: ProjectService,
-    private phaseService: PhaseService,
     private router: Router,
     private entryService: EntryService,
     private store: Store<any>
@@ -44,69 +39,46 @@ export class ListComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.userService
-      .getUsers()
-      .snapshotChanges()
-      .pipe(
-        map(changes =>
-          changes.map((c: any, index: number) => {
-            return {
-              label: c.payload.val().name,
-              value: c.payload.val().name,
-            };
-          })
-        )
-      )
-      .subscribe(datas => {
-        const user = {
-          label: 'All Users',
-          value: 'all',
-        };
-        this.users = [user, ...datas];
-      });
+    this.store.pipe(select('entries')).subscribe(val => {
+      const allUsers = [];
+      const allProjects = [];
+      const allPhases = [];
+      if (val.datas.length > 0) {
+        val.datas.map(data => {
+          allUsers.push({
+            label: data.name,
+            value: data.name,
+          });
+          allProjects.push({
+            label: data.project,
+            value: data.project,
+          });
+          allPhases.push({
+            label: data.phase,
+            value: data.phase,
+          });
+        });
+      }
+      const user = {
+        label: 'All Users',
+        value: 'all',
+      };
+      const project = {
+        label: 'All Projects',
+        value: 'all',
+      };
+      const phase = {
+        label: 'All Phases',
+        value: 'all',
+      };
+      const uniqueUsers = uniqBy(allUsers, 'label');
+      const uniqueProjects = uniqBy(allProjects, 'label');
+      const uniquePhases = uniqBy(allPhases, 'label');
 
-    this.projectService
-      .getProjects()
-      .snapshotChanges()
-      .pipe(
-        map(changes =>
-          changes.map((c: any, index: number) => {
-            return {
-              label: c.payload.val().name,
-              value: c.payload.val().name,
-            };
-          })
-        )
-      )
-      .subscribe(datas => {
-        const project = {
-          label: 'All Projects',
-          value: 'all',
-        };
-        this.projects = [project, ...datas];
-      });
-
-    this.phaseService
-      .getPhases()
-      .snapshotChanges()
-      .pipe(
-        map(changes =>
-          changes.map((c: any, index: number) => {
-            return {
-              label: c.payload.val().name,
-              value: c.payload.val().name,
-            };
-          })
-        )
-      )
-      .subscribe(datas => {
-        const phase = {
-          label: 'All Phases',
-          value: 'all',
-        };
-
-        this.phases = [phase, ...datas];
-      });
+      this.users = [user, ...uniqueUsers];
+      this.projects = [project, ...uniqueProjects];
+      this.phases = [phase, ...uniquePhases];
+    });
   }
 
   ngOnDestroy() {
@@ -185,15 +157,26 @@ export class ListComponent implements OnInit, OnDestroy {
   }
 
   updateDate() {
-    if (this.selectedFromDate && this.selectedToDate) {
-      const filteredData = {
-        project: this.selectedProject,
-        phase: this.selectedPhase,
-        name: this.selectedUser,
-        fromDate: this.selectedFromDate,
-        toDate: this.selectedToDate,
-      };
-      this.store.dispatch(new UpdateFilters(filteredData));
+    if (this.selectedFromDate) {
+      this.isToDateDisabled = false;
+    } else {
+      this.isToDateDisabled = true;
+      this.selectedToDate = '';
+      this.updateEntryFilters();
     }
+    if (this.selectedFromDate && this.selectedToDate) {
+      this.updateEntryFilters();
+    }
+  }
+
+  updateEntryFilters() {
+    const filteredData = {
+      project: this.selectedProject,
+      phase: this.selectedPhase,
+      name: this.selectedUser,
+      fromDate: this.selectedFromDate,
+      toDate: this.selectedToDate,
+    };
+    this.store.dispatch(new UpdateFilters(filteredData));
   }
 }

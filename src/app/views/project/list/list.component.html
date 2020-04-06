@@ -1,5 +1,5 @@
 <div class='card animated fadeIn' style="padding: 20px;">
-  <div *ngIf="!isPageLoading && !hasProject()" class="card-body">
+  <div *ngIf="!isPageLoading && !hasProject()" class="card-body text-center">
     No Projects Available - Click to Add
   </div>
 
@@ -23,7 +23,7 @@
         <td>{{project.name}}</td>
         <td>
           <button (click)=onEdit(project) class =' btn btn-warning'>Edit</button>
-          <!-- <button (click)=onDelete(project) class ='btn btn-danger'>Delete</button> -->
+          <button (click)=onDelete(project) class ='btn btn-danger'>Delete</button>
         </td>
       </tr>
     </tbody>

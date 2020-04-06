@@ -14,6 +14,8 @@
         <div *ngIf="name.touched && name.invalid">
           <small *ngIf="name.errors?.required" class='text-danger'> {{inputLabel}} is required</small>
           <small *ngIf="name.errors?.minlength" class='text-danger'> {{inputLabel}} should have at least 3 characters</small>
+          <small *ngIf="name.errors?.maxlength" class='text-danger'> {{inputLabel}} cannot exceed 15 characters</small>
+
         </div>
       </form>
     </div>

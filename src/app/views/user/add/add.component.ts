@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { upperFirst } from 'lodash';
 import { ToastrService } from 'ngx-toastr';
 import { environment } from '../../../../environments/environment';
 import { AuthenticationService } from '../../../services/authentication.service';
@@ -15,8 +16,14 @@ export class AddComponent implements OnInit {
   isLoading = false;
 
   userForm = this.formBuilder.group({
-    name: ['', [Validators.required]],
-    email: ['', [Validators.required, Validators.email]],
+    name: ['', [Validators.required, Validators.maxLength(30)]],
+    email: [
+      '',
+      [
+        Validators.required,
+        Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$'),
+      ],
+    ],
   });
 
   constructor(
@@ -45,7 +52,7 @@ export class AddComponent implements OnInit {
   onSave() {
     this.isLoading = true;
     const userDetail: any = {
-      name: this.userForm.value.name,
+      name: upperFirst(this.userForm.value.name),
       email: this.userForm.value.email,
       role: environment.Role.User,
     };

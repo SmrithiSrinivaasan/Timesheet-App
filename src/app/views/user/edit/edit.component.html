@@ -12,7 +12,7 @@
         </div>
         <div class="col-3 text-right">
           <app-loading-button text='UPDATE' loadingText='UPDATING' buttonSize='lg' buttonIcon='fa fa-check'
-                                    [isLoading]='isLoading' [isFormInvalid]='userForm.invalid'
+                                    [isLoading]='isLoading' [isFormInvalid]='userForm.invalid || userForm.pristine'
                                     (formSubmit)='onSave()'>
 
           </app-loading-button>
@@ -38,6 +38,7 @@
               <input [class.is-invalid]='name.touched && name.invalid' type="text" class="form-control" formControlName="name" />
               <div *ngIf="name.touched && name.invalid">
                 <small *ngIf="name.errors?.required" class='text-danger'> User Name is required</small>
+                <small *ngIf="name.errors?.maxlength" class='text-danger'> User Name cannot exceed 30 charecters</small>
               </div>
             </div>
           </div>
@@ -50,7 +51,7 @@
               <input [class.is-invalid]='email.touched && email.invalid' type="text" class="form-control" formControlName="email" />
               <div *ngIf="email.touched && email.invalid">
                 <small *ngIf="email.errors?.required" class='text-danger'> User Email is required</small>
-                <small *ngIf="email.errors?.email" class='text-danger'> Invalid User Email</small>
+                <small *ngIf="email.errors?.pattern" class='text-danger'> Invalid User Email</small>
               </div>
             </div>
           </div>
