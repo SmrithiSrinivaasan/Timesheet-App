@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { AngularFireAuth } from '@angular/fire/auth';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
@@ -21,15 +22,19 @@ export class DefaultLayoutComponent {
 
   bsModalRef: BsModalRef;
 
+  authDetails: any;
+
   constructor(
     private modalService: BsModalService,
     private router: Router,
     private store: Store<any>,
     private toast: ToastrService,
-    private authService: AuthenticationService
+    private authService: AuthenticationService,
+    private angularFireAuth: AngularFireAuth
   ) {
-    const authDetails = JSON.parse(localStorage.getItem('auth'));
-    const role = authDetails && authDetails.auth && authDetails.auth.role;
+    this.authDetails = JSON.parse(localStorage.getItem('auth'));
+    const role =
+      this.authDetails && this.authDetails.auth && this.authDetails.auth.role;
 
     navItems.map(navItem => {
       if (navItem.allowedRoles.includes(role)) {
@@ -43,8 +48,14 @@ export class DefaultLayoutComponent {
   }
 
   changePassword() {
-    this.bsModalRef = this.modalService.show(PasswordChangeComponent);
-    this.bsModalRef.content.closeBtnName = 'Close';
+    this.angularFireAuth.auth
+      .sendPasswordResetEmail(this.authDetails.auth.email)
+      .then(() => {
+        this.toast.success('Password Reset Email Sent Successfully');
+      })
+      .catch(error => {
+        this.toast.error(error.message);
+      });
   }
 
   onLogout() {
