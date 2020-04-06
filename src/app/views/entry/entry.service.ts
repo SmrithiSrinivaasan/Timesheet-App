@@ -75,4 +75,16 @@ export class EntryService {
       .equalTo(key)
       .once('value');
   }
+
+  getEntryDetails(name: string, type: string) {
+    return this.db.database
+      .ref(this.dbPath)
+      .orderByChild(type)
+      .equalTo(name)
+      .once('value');
+  }
+
+  updateEditInEntries(key: string, data: any) {
+    this.db.database.ref(this.dbPath + `/${key}`).update(data);
+  }
 }

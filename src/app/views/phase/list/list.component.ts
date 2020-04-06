@@ -5,6 +5,7 @@ import { ToastrService } from 'ngx-toastr';
 import { map } from 'rxjs/operators';
 import { DeleteModalComponent } from '../../../shared/components/delete-modal/delete-modal.component';
 import { InputModalComponent } from '../../../shared/components/input-modal/input-modal.component';
+import { EntryService } from '../../entry/entry.service';
 import { PhaseService } from '../phase.service';
 
 @Component({
@@ -18,10 +19,13 @@ export class ListComponent implements OnInit {
   bsModalRef: BsModalRef;
   isPageLoading = false;
 
+  entryKeys = [];
+
   constructor(
     private modalService: BsModalService,
     private toast: ToastrService,
-    private phaseService: PhaseService
+    private phaseService: PhaseService,
+    private entryService: EntryService
   ) {}
 
   ngOnInit(): void {
@@ -90,19 +94,38 @@ export class ListComponent implements OnInit {
       initialState,
     });
     this.bsModalRef.content.closeBtnName = 'Close';
+    this.entryService
+      .getEntryDetails(phase.name, 'phase')
+      .then((snapshot: any) => {
+        if (snapshot.val()) {
+          this.entryKeys = Object.keys(snapshot.val());
+        }
+      });
 
     // communication with input-modal
-    this.bsModalRef.content.save.subscribe((data: string) => {
+    this.bsModalRef.content.save.subscribe((data: any) => {
       this.phaseService.editPhase(phase.key, data).then(
         (response: any) => {
-          this.toast.success('Phase Updated Successfully !');
-          this.bsModalRef.hide();
+          if (this.entryKeys.length > 0) {
+            const updatedPhaseName = { phase: data.name };
+            this.entryKeys.map(entryKey => {
+              this.entryService.updateEditInEntries(entryKey, updatedPhaseName);
+            });
+            this.closeDialog();
+          } else {
+            this.closeDialog();
+          }
         },
         (error: any) => {
           this.toast.error(error.message);
         }
       );
     });
+  }
+
+  closeDialog() {
+    this.toast.success('Phase Updated Successfully !');
+    this.bsModalRef.hide();
   }
 
   onDelete(phase: any) {
