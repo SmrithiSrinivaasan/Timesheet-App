@@ -76,10 +76,10 @@ export class DashboardComponent implements OnInit {
       )
       .subscribe((datas: any) => {
         // new data is updated from service file
-        this.totalProjects = datas[0].projects;
-        this.totalUsers = datas[2].users;
+        this.totalProjects = datas.length > 2 ? datas[0].projects : 0;
+        this.totalUsers = datas.length > 2 ? datas[2].users : 0;
 
-        const hours = datas[1].totalHours;
+        const hours = datas.length > 2 ? datas[1].totalHours : {};
         Object.keys(hours).map(key => {
           const secondsToHours = this.secondsToHms(hours[key]);
           this.projects.find(project => {

@@ -48,7 +48,7 @@
   <!--/.card-->
 
   <div *ngIf="!isPageLoading && isAdmin()" class="card">
-    <div *ngIf="totalHours.length === 0" class="card-body">
+    <div *ngIf="totalHours.length === 0" class="card-body" style="text-align: center;">
       No Entries Available
     </div>
 
@@ -73,7 +73,7 @@
   </div>
 
   <div *ngIf="!isPageLoading && !isAdmin()" class="card">
-    <div *ngIf="totalHours.length === 0" class="card-body">
+    <div *ngIf="totalHours.length === 0" class="card-body" style="text-align: center;">
       No Entries Available
     </div>
 
